@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "usecase": {
+      "description": "A blank schematic.",
+      "factory": "./usecase/index#usecase",
+      "schema": "./usecase/schema.json"
+    }
+  }
+}
