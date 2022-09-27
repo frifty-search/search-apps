@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from "react";
-import { Stack, IconButton, TextField, Box } from "@mui/material";
-import { Search } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 import { Main } from "./components/main/main.components";
 import { Apps, fetchSearchAPI } from "./utils/api.utils";
+import { SearchBox } from "./components/searchBox/searchBox.components";
 
 type AppState = "start" | "loading" | "loaded" | "error";
 
@@ -28,6 +28,10 @@ const App: React.FC = () => {
       });
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
     <Box
       sx={{
@@ -39,29 +43,12 @@ const App: React.FC = () => {
         flexDirection: "column",
       }}
     >
-      <form
-        onSubmit={handleSumbit}
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <TextField
-          id="search-bar"
-          className="text"
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-          }}
-          label="Enter the Query"
-          variant="outlined"
-          placeholder="Search..."
-        />
-        <IconButton type="submit" aria-label="search">
-          <Search style={{ fill: "blue" }} />
-        </IconButton>
-      </form>
+      <SearchBox
+        handleSumbit={handleSumbit}
+        onChange={handleChange}
+        placeholder="Search..."
+        label="Enter the Query"
+      />
       {state === "loading" ? (
         <h1>Loading...</h1>
       ) : state === "error" ? (

@@ -1,5 +1,5 @@
 import React from "react";
-import { AgeCalculator, DumbCharades } from "../../usecases";
+import { DumbCharades, AgeCalculator } from "../../usecases";
 import { Apps } from "../../utils/api.utils";
 import { AppName } from "../../utils/appName.utils";
 
