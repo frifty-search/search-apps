@@ -26,12 +26,22 @@ const generateRandomNumber = (max: number) => {
 };
 
 const DumbCharades: React.FC<{
-  data: { hollywood: Movies[]; bollywood: Movies[] };
-}> = ({ data }: { data: { hollywood: Movies[]; bollywood: Movies[] } }) => {
-  console.log(data);
-  const { hollywood, bollywood } = data;
+  data: {
+    bollywood: Movies[];
+    hollywood: Movies[];
+  };
+}> = ({
+  data,
+}: {
+  data: {
+    bollywood: Movies[];
+    hollywood: Movies[];
+  };
+}) => {
+  const { bollywood, hollywood } = data;
 
   const [movieType, setMovieType] = useState<MovieType>("bollywood");
+
   const [movie, setMovie] = useState<Movies | null>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

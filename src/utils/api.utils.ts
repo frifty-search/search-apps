@@ -6,6 +6,12 @@ export type Apps = {
   appName: string;
   appVersion: string;
   data: any;
+  credits: {
+    developer: string;
+    developerUrl: string;
+    maintainer: string;
+    maintainerUrl: string;
+  };
 };
 
 export async function fetchSearchAPI(q: string): Promise<Apps> {
@@ -19,5 +25,25 @@ export async function fetchSearchAPI(q: string): Promise<Apps> {
     throw new Error("Query Not Found!");
   }
   const data = await response.json();
+  return data;
+}
+
+export async function getUsecaseDataFromServer(
+  id: number,
+  query: any
+): Promise<any> {
+  const url = new URL(`${BASE_URL}/usecases/${id}`);
+  Object.keys(query).forEach((key) => url.searchParams.append(key, query[key]));
+
+  const response = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    return null;
+  }
+  const { data } = await response.json();
   return data;
 }

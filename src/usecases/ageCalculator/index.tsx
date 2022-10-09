@@ -7,14 +7,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const AgeCalculator: React.FC<{}> = () => {
   console.log("AgeCalculator");
-  const [date, setDate] = useState<Dayjs>(dayjs());
+  const [date, setDate] = useState<Dayjs | null>(dayjs());
   const [age, setAge] = useState<string>("");
   const [error, setError] = useState<string>("");
   const theme = useTheme();
 
   const handleChange = (newValue: Dayjs | null) => {
-    if (newValue === null) {
-      setError("Date cannot be empty");
+    if (!newValue) {
+      setError("Please select a date");
+      setAge("");
       return;
     }
     if (newValue.isAfter(dayjs())) {
@@ -28,8 +29,9 @@ const AgeCalculator: React.FC<{}> = () => {
   };
 
   const handleClick = () => {
-    if (date === null) {
-      setError("Date cannot be empty");
+    if (!date) {
+      setError("Please select a date");
+      setAge("");
       return;
     }
     if (date.isAfter(dayjs())) {
@@ -37,31 +39,46 @@ const AgeCalculator: React.FC<{}> = () => {
       setAge("");
       return;
     }
-    if (date.isValid()) {
-      let year = dayjs().diff(date, "year");
-      let month: number = 0,
-        day: number = 0;
-      if (dayjs().month() < date.month()) {
-        year -= 1;
-        month = 12 - date.month() + dayjs().month();
-      } else {
-        month = dayjs().month() - date.month();
-      }
-      if (dayjs().date() >= date.date()) {
-        day = dayjs().date() - date.date();
-      } else {
-        month = month - 1;
-        day = 31 - date.date() + dayjs().date();
-        if (month === 0) {
-          year = year - 1;
-          month = 11;
-        }
-      }
-      setError("");
-      setAge(`${year} years ${month} months ${day} days`);
-    } else {
-      setError("Please select a valid date");
+
+    if (!date.isValid()) {
+      setError("Date is not valid");
+      return;
     }
+
+    const endDay = dayjs();
+    let year = endDay.diff(date, "year");
+    let month: number = 0,
+      day: number = 0;
+    if (endDay.month() < date.month()) {
+      year -= 1;
+      month = 12 - date.month() + endDay.month();
+    } else {
+      month = endDay.month() - date.month();
+    }
+    if (endDay.date() >= date.date()) {
+      day = endDay.date() - date.date();
+    } else {
+      month = month - 1;
+      day = 31 - date.date() + endDay.date();
+      if (month === -1) {
+        year = year - 1;
+        month = 11;
+      }
+    }
+    setError("");
+    let timePeriod = ``;
+    if (year > 0) {
+      timePeriod += `${year} year${year > 1 ? "s" : ""}`;
+    }
+    if (month > 0) {
+      timePeriod += `${year > 0 ? ", " : ""}${month} month${
+        month > 1 ? "s" : ""
+      }`;
+    }
+    timePeriod += `${year > 0 || month > 0 ? " and " : ""}${day} day${
+      day > 1 ? "s" : ""
+    }`;
+    setAge(timePeriod);
   };
 
   return (

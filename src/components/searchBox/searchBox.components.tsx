@@ -1,6 +1,6 @@
 import { Search } from "@mui/icons-material";
 import { IconButton, TextField } from "@mui/material";
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler } from "react";
 
 type SearchBoxProps = {
   handleSumbit: (e: React.FormEvent) => void;
