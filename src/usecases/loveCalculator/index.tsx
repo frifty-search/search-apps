@@ -19,7 +19,7 @@ const LoveCalculator: React.FC = () => {
     } else if (lovePercentage > 70) {
       return "There's probably something there. Just make sure your presence is known so your feelings don't get trampled like a 4ft 8in NBA player.";
     } else {
-      return "Your love is as strong as the love between most children and their vegetables: insubstantial.";
+      return "Your love is as strong as the love between most children and their vegetables: imaginary.";
     }
   };
 

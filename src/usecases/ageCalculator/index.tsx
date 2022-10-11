@@ -6,8 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const AgeCalculator: React.FC<{}> = () => {
-  console.log("AgeCalculator");
-  const [date, setDate] = useState<Dayjs | null>(dayjs());
+  const [date, setDate] = useState<Dayjs | null>(dayjs().startOf("hours"));
   const [age, setAge] = useState<string>("");
   const [error, setError] = useState<string>("");
   const theme = useTheme();
@@ -45,7 +44,8 @@ const AgeCalculator: React.FC<{}> = () => {
       return;
     }
 
-    const endDay = dayjs();
+    const endDay = dayjs().startOf("day");
+    console.log(endDay.format("YYYY-MM-DD HH:mm:ss"));
     let year = endDay.diff(date, "year");
     let month: number = 0,
       day: number = 0;

@@ -18,7 +18,7 @@ const DaysDiff: React.FC<{}> = () => {
       setTimePeriod("");
       return;
     }
-    setStartDay(newValue);
+    setStartDay(newValue.startOf("day"));
     if (newValue.isAfter(endDay)) {
       setError("Start date cannot be after end date");
       setTimePeriod("");
@@ -35,7 +35,7 @@ const DaysDiff: React.FC<{}> = () => {
       setTimePeriod("");
       return;
     }
-    setEndDay(newValue);
+    setEndDay(newValue.startOf("day"));
     if (newValue.isBefore(startDay)) {
       setError("End date cannot be before start date");
       setTimePeriod("");

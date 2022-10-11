@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  Box,
-  Divider,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Grid, IconButton, Typography } from "@mui/material";
 
 import {
   ThumbUpOutlined,
@@ -26,33 +19,65 @@ type MainProps = {
 };
 
 type CreditsProps = {
-  developer: string;
-  developerUrl: string;
-  maintainer: string;
-  maintainerUrl: string;
+  developer: [
+    {
+      name: string;
+      url: string;
+    }
+  ];
+  maintainer: [
+    {
+      name: string;
+      url: string;
+    }
+  ];
 };
 
 const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
-  const { developer, developerUrl, maintainer, maintainerUrl } = credits;
-  return developerUrl === maintainerUrl ? (
-    <Typography variant="body1" component="p">
-      This app is developed and maintained by{" "}
-      <a href={developerUrl} target="_blank" rel="noreferrer">
-        {developer}
-      </a>
-      .
-    </Typography>
-  ) : (
-    <Typography variant="body1" component="p">
-      This app is developed by{" "}
-      <a href={developerUrl} target="_blank" rel="noreferrer">
-        {developer}
-      </a>{" "}
-      and maintained by{" "}
-      <a href={maintainerUrl} target="_blank" rel="noreferrer">
-        {maintainer}
-      </a>
-      .
+  const { developer, maintainer } = credits;
+  return (
+    <Typography
+      style={{
+        marginTop: 1,
+        marginBottom: 1,
+      }}
+    >
+      This App is <br />
+      developer by:{"  "}
+      {developer.map((dev, index) => (
+        <a
+          key={`developer-${index}`}
+          href={dev.url}
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "pointer",
+          }}
+        >
+          {dev.name}
+          {index !== developer.length - 1 && ", "}
+        </a>
+      ))}
+      <br />
+      maintainer by:{"  "}
+      {maintainer.map((maint, index) => (
+        <a
+          key={`maintainer-${index}`}
+          href={maint.url}
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "pointer",
+          }}
+        >
+          {maint.name}
+          {index !== maintainer.length - 1 && ", "}
+        </a>
+      ))}
     </Typography>
   );
 };
@@ -117,14 +142,13 @@ export const Main: React.FC<MainProps> = ({ data }) => {
         direction="row"
         justifyContent="space-between"
         alignItems="flex-start"
-        spacing={2}
       >
         <Grid item>
           <Box
             style={{
               display: "flex",
               flexDirection: "row",
-              alignItems: "flex-start",
+              alignItems: "center",
             }}
             paddingLeft={3}
           >
