@@ -1,4 +1,4 @@
-const BASE_URL = "https://f741-2405-201-a00b-6081-58ed-892c-fee2-d89f.ngrok.io";
+const BASE_URL = "https://easy-search-backend.herokuapp.com";
 const id = "632b660901da326117213bf4";
 
 export type Apps = {
