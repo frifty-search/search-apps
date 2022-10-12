@@ -13,8 +13,9 @@ import {
 
 import { strings } from "@angular-devkit/core";
 
-import { UseCaseSchema } from "./schema";
-
+interface UseCaseSchema {
+  name: string;
+}
 // You don't have to export the function as default. You can also have more than one rule factory
 // per file.
 export function usecase(_options: UseCaseSchema): Rule {
@@ -33,7 +34,6 @@ export function usecase(_options: UseCaseSchema): Rule {
         tree,
         _context
       );
-      
     }
 
     throw new Error("No usecase folder found");
