@@ -10,6 +10,7 @@ import {
   UnicornDefn,
   LoveCalculator,
   Horoscope,
+  TimezoneConverter,
 } from "../../usecases";
 import { Apps } from "../../utils/api.utils";
 import { AppName } from "../../utils/appName.utils";
@@ -36,5 +37,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <LoveCalculator />;
     case AppName.HOROSCOPE:
       return <Horoscope />;
+    case AppName.TIMEZONECONVERTER:
+      return <TimezoneConverter />;
   }
 };

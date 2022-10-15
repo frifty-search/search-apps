@@ -9,4 +9,5 @@ export const AppName = {
   UNICORNDEFN: 9,
   LOVECALCULATOR: 10,
   HOROSCOPE: 11,
+  TIMEZONECONVERTER:14,
 };

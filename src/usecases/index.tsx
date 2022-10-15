@@ -8,6 +8,7 @@ import PythonNotebook from "./pythonNotebook";
 import UnicornDefn from "./unicornDefn";
 import LoveCalculator from "./loveCalculator";
 import Horoscope from "./horoscope";
+import TimezoneConverter from "./timezoneConverter";
 
 export {
   DumbCharades,
@@ -20,4 +21,5 @@ export {
   UnicornDefn,
   LoveCalculator,
   Horoscope,
+  TimezoneConverter,
 };
