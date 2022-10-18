@@ -1,5 +1,5 @@
-const BASE_URL = "https://easy-search-backend.herokuapp.com";
-const id = "632b660901da326117213bf4";
+const BASE_URL = process.env.REACT_APP_API_URL;
+const id = process.env.REACT_APP_API_ID;
 
 export type Apps = {
   appId: number;

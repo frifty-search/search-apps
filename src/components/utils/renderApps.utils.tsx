@@ -10,6 +10,13 @@ import {
   UnicornDefn,
   LoveCalculator,
   Horoscope,
+  Unsplash,
+  BarcodeGenerator,
+  QrcodeGenerator,
+  UrlShortner,
+  PercentageCalculator,
+  PngToJpeg,
+  ImageToPdf,
 } from "../../usecases";
 import { Apps } from "../../utils/api.utils";
 import { AppName } from "../../utils/appName.utils";
@@ -36,5 +43,19 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <LoveCalculator />;
     case AppName.HOROSCOPE:
       return <Horoscope />;
+    case AppName.UNSPLASH:
+      return <Unsplash />;
+    case AppName.BARCODEGENERATOR:
+      return <BarcodeGenerator />;
+    case AppName.QRCODEGENERATOR:
+      return <QrcodeGenerator />;
+    case AppName.URLSHORTNER:
+      return <UrlShortner />;
+    case AppName.PERCENTAGECALCULATOR:
+      return <PercentageCalculator />;
+    case AppName.PNGTOJPEG:
+      return <PngToJpeg />;
+    case AppName.IMAGETOPDF:
+      return <ImageToPdf />;
   }
 };
