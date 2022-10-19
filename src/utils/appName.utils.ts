@@ -16,4 +16,5 @@ export const AppName = {
   PERCENTAGECALCULATOR: 18,
   PNGTOJPEG: 19,
   IMAGETOPDF: 21,
+  PHOTORESIZER: 25,
 };

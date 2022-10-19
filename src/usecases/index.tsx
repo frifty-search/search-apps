@@ -15,6 +15,7 @@ import UrlShortner from "./urlShortner";
 import PercentageCalculator from "./percentageCalculator";
 import PngToJpeg from "./pngToJpeg";
 import ImageToPdf from "./imageToPdf";
+import PhotoResizer from "./photoResizer";
 
 export {
   DumbCharades,
@@ -34,4 +35,5 @@ export {
   PercentageCalculator,
   PngToJpeg,
   ImageToPdf,
+  PhotoResizer,
 };

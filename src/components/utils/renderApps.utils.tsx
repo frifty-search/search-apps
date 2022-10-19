@@ -17,6 +17,7 @@ import {
   PercentageCalculator,
   PngToJpeg,
   ImageToPdf,
+  PhotoResizer,
 } from "../../usecases";
 import { Apps } from "../../utils/api.utils";
 import { AppName } from "../../utils/appName.utils";
@@ -57,5 +58,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <PngToJpeg />;
     case AppName.IMAGETOPDF:
       return <ImageToPdf />;
+    case AppName.PHOTORESIZER:
+      return <PhotoResizer />;
   }
 };

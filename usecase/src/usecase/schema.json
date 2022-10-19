@@ -12,7 +12,25 @@
         "index": 0
       },
       "x-prompt": "What is the name of the usecase?"
+    },
+    "appId": {
+      "description": "The id of the app.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "x-prompt": "What is the id of the app?"
+    },
+    "appData": {
+      "description": "The title of the app.",
+      "type": "boolean",
+      "$default": {
+        "$source": "argv",
+        "index": 2
+      },
+      "x-prompt": "Does this app require data?"
     }
   },
-  "required": ["name"]
+  "required": ["name", "appId", "appData"]
 }
