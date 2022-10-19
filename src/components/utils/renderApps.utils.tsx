@@ -10,6 +10,7 @@ import {
   UnicornDefn,
   LoveCalculator,
   Horoscope,
+  TimezoneConverter,
   Unsplash,
   BarcodeGenerator,
   QrcodeGenerator,
@@ -44,6 +45,8 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <LoveCalculator />;
     case AppName.HOROSCOPE:
       return <Horoscope />;
+    case AppName.TIMEZONECONVERTER:
+      return <TimezoneConverter />;
     case AppName.UNSPLASH:
       return <Unsplash />;
     case AppName.BARCODEGENERATOR:

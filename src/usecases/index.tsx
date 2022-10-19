@@ -8,6 +8,7 @@ import PythonNotebook from "./pythonNotebook";
 import UnicornDefn from "./unicornDefn";
 import LoveCalculator from "./loveCalculator";
 import Horoscope from "./horoscope";
+import TimezoneConverter from "./timezoneConverter";
 import Unsplash from "./unsplash";
 import BarcodeGenerator from "./barcodeGenerator";
 import QrcodeGenerator from "./qrcodeGenerator";
@@ -28,6 +29,7 @@ export {
   UnicornDefn,
   LoveCalculator,
   Horoscope,
+  TimezoneConverter,
   Unsplash,
   BarcodeGenerator,
   QrcodeGenerator,
