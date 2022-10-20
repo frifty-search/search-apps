@@ -1,5 +1,5 @@
-const BASE_URL = process.env.REACT_APP_API_URL;
-const id = process.env.REACT_APP_API_ID;
+const BASE_URL = import.meta.env.VITE_API_URL;
+const id = import.meta.env.VITE_API_ID;
 
 export type Apps = {
   appId: number;

@@ -1,18 +1,26 @@
 {
-  "name": "frifty-search-component",
-  "version": "0.1.0",
+  "name": "search-apps",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "usecase:install": "cd usecase && npm install",
+    "usecase:create": "schematics ./usecase:usecase --debug=false --force",
+    "usecase:build": "cd usecase && npm run build",
+    "prepare": "husky install",
+    "format": "prettier --write src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
+  },
   "dependencies": {
     "@angular-devkit/schematics-cli": "^14.2.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.11.58",
-    "@types/react": "^18.0.19",
-    "@types/react-dom": "^18.0.6",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.10.1",
+    "@mui/x-date-pickers": "^5.0.0",
     "copy-image-clipboard": "^2.1.2",
     "dayjs": "^1.11.5",
     "dayjs-plugin-utc": "^0.1.2",
@@ -21,39 +29,30 @@
     "mui-file-dropzone": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.8.3",
-    "timezone-abbreviations": "^1.2.6",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "usecase:install": "cd usecase && npm install",
-    "usecase:create": "schematics ./usecase:usecase --debug=false --force",
-    "usecase:build": "cd usecase && npm run build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "timezone-abbreviations": "^1.2.6"
   },
   "devDependencies": {
-    "@types/file-saver": "^2.0.5"
+    "@types/file-saver": "^2.0.5",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@vitejs/plugin-react": "^2.1.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "typescript": "*",
+    "vite": "^3.1.0"
   }
 }
