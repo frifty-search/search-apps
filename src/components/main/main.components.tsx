@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Box, Divider, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
 
 import {
   ThumbUpOutlined,
@@ -8,10 +8,10 @@ import {
   ThumbUp,
   ThumbDown,
   Close,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 
-import { Apps } from "../../utils/api.utils";
-import { renderApps } from "../utils/renderApps.utils";
+import { Apps } from '../../utils/api.utils';
+import { renderApps } from '../utils/renderApps.utils';
 
 type MainProps = {
   data: Apps;
@@ -43,7 +43,7 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
       }}
     >
       This App is <br />
-      developer by:{"  "}
+      developer by:{'  '}
       {developer.map((dev, index) => (
         <a
           key={`developer-${index}`}
@@ -51,17 +51,17 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
           target="_blank"
           rel="noreferrer"
           style={{
-            textDecoration: "none",
-            color: "inherit",
-            cursor: "pointer",
+            textDecoration: 'none',
+            color: 'inherit',
+            cursor: 'pointer',
           }}
         >
           {dev.name}
-          {index !== developer.length - 1 && ", "}
+          {index !== developer.length - 1 && ', '}
         </a>
       ))}
       <br />
-      maintainer by:{"  "}
+      maintainer by:{'  '}
       {maintainer.map((maint, index) => (
         <a
           key={`maintainer-${index}`}
@@ -69,13 +69,13 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
           target="_blank"
           rel="noreferrer"
           style={{
-            textDecoration: "none",
-            color: "inherit",
-            cursor: "pointer",
+            textDecoration: 'none',
+            color: 'inherit',
+            cursor: 'pointer',
           }}
         >
           {maint.name}
-          {index !== maintainer.length - 1 && ", "}
+          {index !== maintainer.length - 1 && ', '}
         </a>
       ))}
     </Typography>
@@ -104,28 +104,28 @@ export const Main: React.FC<MainProps> = ({ data }) => {
     <Box
       sx={{
         width: 0.4,
-        backgroundColor: "background.main",
+        backgroundColor: 'background.main',
         mt: 5,
         mb: 4,
-        borderRadius: "16px",
-        border: "1px solid #3c4043",
+        borderRadius: '16px',
+        border: '1px solid #3c4043',
       }}
     >
       {renderApps(data)}
       <Divider variant="fullWidth">
-        <Typography sx={{ fontStyle: "italic" }}>Powered by Frifty</Typography>
+        <Typography sx={{ fontStyle: 'italic' }}>Powered by Frifty</Typography>
       </Divider>
       {open ? (
         <>
           <Box
             style={{
-              display: "flex",
-              flexDirection: "row-reverse",
+              display: 'flex',
+              flexDirection: 'row-reverse',
             }}
           >
             <IconButton
               onClick={() => setOpen(false)}
-              sx={{ color: "text.secondary" }}
+              sx={{ color: 'text.secondary' }}
             >
               <Close />
             </IconButton>
@@ -146,9 +146,9 @@ export const Main: React.FC<MainProps> = ({ data }) => {
         <Grid item>
           <Box
             style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
             paddingLeft={3}
           >
@@ -160,7 +160,7 @@ export const Main: React.FC<MainProps> = ({ data }) => {
                 <Box m={1}>
                   <IconButton
                     onClick={() => onHandleLikeClick(1)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <ThumbUpOutlined />
                   </IconButton>
@@ -168,7 +168,7 @@ export const Main: React.FC<MainProps> = ({ data }) => {
                 <Box m={1}>
                   <IconButton
                     onClick={() => onHandleLikeClick(-1)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <ThumbDownOutlined />
                   </IconButton>
@@ -179,7 +179,7 @@ export const Main: React.FC<MainProps> = ({ data }) => {
                 <Box m={1}>
                   <IconButton
                     onClick={() => onHandleLikeClick(0)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <ThumbUp />
                   </IconButton>
@@ -187,7 +187,7 @@ export const Main: React.FC<MainProps> = ({ data }) => {
                 <Box m={1}>
                   <IconButton
                     onClick={() => onHandleLikeClick(-1)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <ThumbDownOutlined />
                   </IconButton>
@@ -198,7 +198,7 @@ export const Main: React.FC<MainProps> = ({ data }) => {
                 <Box m={1}>
                   <IconButton
                     onClick={() => onHandleLikeClick(1)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <ThumbUpOutlined />
                   </IconButton>
@@ -206,7 +206,7 @@ export const Main: React.FC<MainProps> = ({ data }) => {
                 <Box m={1}>
                   <IconButton
                     onClick={() => onHandleLikeClick(0)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <ThumbDown />
                   </IconButton>
@@ -221,15 +221,15 @@ export const Main: React.FC<MainProps> = ({ data }) => {
             p={1}
             onClick={() => setOpen(true)}
             style={{
-              cursor: "pointer",
+              cursor: 'pointer',
             }}
           >
             <Typography
               variant="subtitle1"
-              sx={{ textDecoration: "underline" }}
+              sx={{ textDecoration: 'underline' }}
               display="inline"
             >
-              Credits{" "}
+              Credits{' '}
             </Typography>
           </Box>
         </Grid>

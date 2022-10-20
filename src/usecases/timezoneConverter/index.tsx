@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Button,
   Stack,
@@ -8,15 +8,14 @@ import {
   Select,
   FormControl,
   InputLabel,
-} from "@mui/material";
-import { Dayjs } from "dayjs";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import timezones, { TimeZone } from "timezone-abbreviations";
+} from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import timezones, { TimeZone } from 'timezone-abbreviations';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -25,8 +24,8 @@ const TimezoneConverter: React.FC = () => {
   const [givenTime, setgivenTime] = useState<Dayjs | null>(null);
   const [country1, setCountry1] = useState<string>();
   const [country2, setCountry2] = useState<string>();
-  const [result, setResult] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [result, setResult] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const countryObject = timezones.reduce((acc, timezone) => {
     if (timezone.names) {
@@ -35,36 +34,36 @@ const TimezoneConverter: React.FC = () => {
     return acc;
   }, {} as { [key: string]: TimeZone });
   const countryArray = Object.keys(countryObject);
-  countryArray.push("");
+  countryArray.push('');
   countryArray.sort();
 
   const handleClick = () => {
     if (!givenTime || !country1 || !country2) {
-      setError("Please fill all the fields");
+      setError('Please fill all the fields');
       return;
     }
     if (!(country1 in countryObject) || !(country2 in countryObject)) {
-      setError("Please select a valid country");
+      setError('Please select a valid country');
       return;
     }
     const country1timezone = countryObject[country1].names![0];
     const country2timezone = countryObject[country2].names![0];
     const time1 = dayjs()
       .tz(country1timezone)
-      .set("hour", givenTime.hour())
-      .set("minute", givenTime.minute());
+      .set('hour', givenTime.hour())
+      .set('minute', givenTime.minute());
     const time2 = time1.tz(country2timezone);
-    setError("");
+    setError('');
     setResult(
-      `${time1.format("HH:mm A ddd")} in ${country1} is   ${time2.format(
-        "HH:mm A ddd"
+      `${time1.format('HH:mm A ddd')} in ${country1} is   ${time2.format(
+        'HH:mm A ddd'
       )} in ${country2}`
     );
   };
 
   return (
     <Stack spacing={1} mx={1} my={5}>
-      <Stack spacing={1} direction={"row"}>
+      <Stack spacing={1} direction={'row'}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <TimePicker
             label="Select Time"
@@ -80,8 +79,8 @@ const TimezoneConverter: React.FC = () => {
           <Select
             labelId="country1-select-label"
             id="country1-select"
-            value={country1 ? country1 : ""}
-            placeholder={"Country 1"}
+            value={country1 || ''}
+            placeholder={'Country 1'}
             onChange={(e) => {
               setCountry1(e.target.value as string);
             }}
@@ -100,7 +99,7 @@ const TimezoneConverter: React.FC = () => {
           <Select
             labelId="country2-select-label"
             id="country2-select"
-            value={country2 ? country2 : ""}
+            value={country2 || ''}
             label={country2}
             onChange={(e) => {
               setCountry2(e.target.value as string);
@@ -127,7 +126,7 @@ const TimezoneConverter: React.FC = () => {
         Convert
       </Button>
       {error.length !== 0 && (
-        <Typography color="error" variant={"h6"}>
+        <Typography color="error" variant={'h6'}>
           {error}
         </Typography>
       )}
@@ -137,5 +136,3 @@ const TimezoneConverter: React.FC = () => {
 };
 
 export default TimezoneConverter;
-
-

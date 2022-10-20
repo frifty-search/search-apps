@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Button, Stack, TextField, Typography, useTheme } from "@mui/material";
-import dayjs, { Dayjs } from "dayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import React, { useState } from 'react';
+import { Button, Stack, TextField, Typography, useTheme } from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const DaysDiffFromNow: React.FC<{}> = () => {
   const [date, setDate] = useState<Dayjs | null>(dayjs());
@@ -17,8 +17,8 @@ const DaysDiffFromNow: React.FC<{}> = () => {
     years: 0,
   });
 
-  const [age, setAge] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [age, setAge] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const theme = useTheme();
 
   const handleChange = (newValue: Dayjs | null) => {
@@ -35,23 +35,23 @@ const DaysDiffFromNow: React.FC<{}> = () => {
 
   const handleClick = () => {
     if (!date) {
-      setError("Please select a date");
-      setAge("");
+      setError('Please select a date');
+      setAge('');
       return;
     }
     if (date.isValid()) {
       const newDate = date
-        .add(addDate.years, "year")
-        .add(addDate.months, "month")
-        .add(addDate.days, "day");
+        .add(addDate.years, 'year')
+        .add(addDate.months, 'month')
+        .add(addDate.days, 'day');
       setAge(
-        `${date.format("DD/MM/YYYY")} after ${addDate.years} years, ${
+        `${date.format('DD/MM/YYYY')} after ${addDate.years} years, ${
           addDate.months
-        } months and ${addDate.days} days is ${newDate.format("DD/MM/YYYY")}`
+        } months and ${addDate.days} days is ${newDate.format('DD/MM/YYYY')}`
       );
-      setError("");
+      setError('');
     } else {
-      setError("Please select a valid date");
+      setError('Please select a valid date');
     }
   };
 
@@ -66,37 +66,37 @@ const DaysDiffFromNow: React.FC<{}> = () => {
             inputFormat="DD-MMM-YYYY"
             value={date}
             onChange={handleChange}
-            disableMaskedInput={true}
+            disableMaskedInput
             renderInput={(params) => (
-              <TextField {...params} disabled={true} fullWidth />
+              <TextField {...params} disabled fullWidth />
             )}
           />
         </LocalizationProvider>
         <Typography variant="subtitle1">+</Typography>
         <TextField
           defaultValue={addDate.years.toString()}
-          label={"Years"}
+          label={'Years'}
           onChange={handleValues}
-          name={"years"}
-          variant={"outlined"}
+          name={'years'}
+          variant={'outlined'}
           required
         />
         <Typography variant="subtitle1">+</Typography>
         <TextField
           defaultValue={addDate.months.toString()}
-          label={"Months"}
+          label={'Months'}
           onChange={handleValues}
-          name={"months"}
-          variant={"outlined"}
+          name={'months'}
+          variant={'outlined'}
           required
         />
         <Typography variant="subtitle1">+</Typography>
         <TextField
           defaultValue={addDate.days.toString()}
-          label={"Days"}
+          label={'Days'}
           onChange={handleValues}
-          name={"days"}
-          variant={"outlined"}
+          name={'days'}
+          variant={'outlined'}
           required
         />
       </Stack>
@@ -112,8 +112,8 @@ const DaysDiffFromNow: React.FC<{}> = () => {
         <Typography
           variant="h6"
           sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           {age}.
@@ -124,8 +124,8 @@ const DaysDiffFromNow: React.FC<{}> = () => {
         <Typography
           variant="h6"
           sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
           style={{ color: theme.palette.error.main }}
         >

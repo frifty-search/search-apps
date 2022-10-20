@@ -1,54 +1,54 @@
-import React, { useState } from "react";
-import { Button, Stack, TextField, Typography, useTheme } from "@mui/material";
-import dayjs, { Dayjs } from "dayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import React, { useState } from 'react';
+import { Button, Stack, TextField, Typography, useTheme } from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-const AgeCalculator: React.FC<{}> = () => {
-  const [date, setDate] = useState<Dayjs | null>(dayjs().startOf("hours"));
-  const [age, setAge] = useState<string>("");
-  const [error, setError] = useState<string>("");
+const AgeCalculator: React.FC = () => {
+  const [date, setDate] = useState<Dayjs | null>(dayjs().startOf('hours'));
+  const [age, setAge] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const theme = useTheme();
 
   const handleChange = (newValue: Dayjs | null) => {
     if (!newValue) {
-      setError("Please select a date");
-      setAge("");
+      setError('Please select a date');
+      setAge('');
       return;
     }
     if (newValue.isAfter(dayjs())) {
-      setError("Date cannot be in future");
-      setAge("");
+      setError('Date cannot be in future');
+      setAge('');
       setDate(newValue);
       return;
     }
     setDate(newValue);
-    setError("");
+    setError('');
   };
 
   const handleClick = () => {
     if (!date) {
-      setError("Please select a date");
-      setAge("");
+      setError('Please select a date');
+      setAge('');
       return;
     }
     if (date.isAfter(dayjs())) {
-      setError("Date cannot be in future");
-      setAge("");
+      setError('Date cannot be in future');
+      setAge('');
       return;
     }
 
     if (!date.isValid()) {
-      setError("Date is not valid");
+      setError('Date is not valid');
       return;
     }
 
-    const endDay = dayjs().startOf("day");
-    console.log(endDay.format("YYYY-MM-DD HH:mm:ss"));
-    let year = endDay.diff(date, "year");
-    let month: number = 0,
-      day: number = 0;
+    const endDay = dayjs().startOf('day');
+    console.log(endDay.format('YYYY-MM-DD HH:mm:ss'));
+    let year = endDay.diff(date, 'year');
+    let month = 0;
+    let day = 0;
     if (endDay.month() < date.month()) {
       year -= 1;
       month = 12 - date.month() + endDay.month();
@@ -58,25 +58,25 @@ const AgeCalculator: React.FC<{}> = () => {
     if (endDay.date() >= date.date()) {
       day = endDay.date() - date.date();
     } else {
-      month = month - 1;
+      month -= 1;
       day = 31 - date.date() + endDay.date();
       if (month === -1) {
-        year = year - 1;
+        year -= 1;
         month = 11;
       }
     }
-    setError("");
+    setError('');
     let timePeriod = ``;
     if (year > 0) {
-      timePeriod += `${year} year${year > 1 ? "s" : ""}`;
+      timePeriod += `${year} year${year > 1 ? 's' : ''}`;
     }
     if (month > 0) {
-      timePeriod += `${year > 0 ? ", " : ""}${month} month${
-        month > 1 ? "s" : ""
+      timePeriod += `${year > 0 ? ', ' : ''}${month} month${
+        month > 1 ? 's' : ''
       }`;
     }
-    timePeriod += `${year > 0 || month > 0 ? " and " : ""}${day} day${
-      day > 1 ? "s" : ""
+    timePeriod += `${year > 0 || month > 0 ? ' and ' : ''}${day} day${
+      day > 1 ? 's' : ''
     }`;
     setAge(timePeriod);
   };
@@ -89,8 +89,8 @@ const AgeCalculator: React.FC<{}> = () => {
           inputFormat="DD-MMM-YYYY"
           value={date}
           onChange={handleChange}
-          disableMaskedInput={true}
-          renderInput={(params) => <TextField {...params} disabled={true} />}
+          disableMaskedInput
+          renderInput={(params) => <TextField {...params} disabled />}
         />
       </LocalizationProvider>
       <Button
@@ -105,8 +105,8 @@ const AgeCalculator: React.FC<{}> = () => {
         <Typography
           variant="h6"
           sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           Your age is {age}.
@@ -117,8 +117,8 @@ const AgeCalculator: React.FC<{}> = () => {
         <Typography
           variant="h6"
           sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
           style={{ color: theme.palette.error.main }}
         >

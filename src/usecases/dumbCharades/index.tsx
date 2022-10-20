@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Button,
   Divider,
@@ -9,7 +9,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
 type Movies = {
   name: string;
@@ -19,7 +19,7 @@ type Movies = {
   rating: number;
 };
 
-type MovieType = "bollywood" | "hollywood";
+type MovieType = 'bollywood' | 'hollywood';
 
 const generateRandomNumber = (max: number) => {
   return Math.floor(Math.random() * Date.now()) % max;
@@ -40,13 +40,13 @@ const DumbCharades: React.FC<{
 }) => {
   const { bollywood, hollywood } = data;
 
-  const [movieType, setMovieType] = useState<MovieType>("bollywood");
+  const [movieType, setMovieType] = useState<MovieType>('bollywood');
 
   const [movie, setMovie] = useState<Movies | null>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (movieType === "bollywood") {
+    if (movieType === 'bollywood') {
       setMovie(bollywood[generateRandomNumber(bollywood.length)]);
     } else {
       setMovie(hollywood[generateRandomNumber(hollywood.length)]);
@@ -98,8 +98,8 @@ const DumbCharades: React.FC<{
           <Typography
             variant="h6"
             sx={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
             {movie.name}

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Button, Stack } from "@mui/material";
-import { DropzoneArea } from "mui-file-dropzone";
-import jsPDF from "jspdf";
-import { saveAs } from "file-saver";
+import React, { useState } from 'react';
+import { Button, Stack } from '@mui/material';
+import { DropzoneArea } from 'mui-file-dropzone';
+import jsPDF from 'jspdf';
+import { saveAs } from 'file-saver';
 
 const ImageToPdf: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -20,7 +20,7 @@ const ImageToPdf: React.FC = () => {
   }> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.crossOrigin = "Anonymous";
+      img.crossOrigin = 'Anonymous';
       img.onload = () => {
         resolve({
           img,
@@ -69,10 +69,10 @@ const ImageToPdf: React.FC = () => {
       ) => a.index - b.index
     );
 
-    const doc = new jsPDF("p", "pt", "a4");
+    const doc = new jsPDF('p', 'pt', 'a4');
 
-    const height = doc.internal.pageSize.height;
-    const width = doc.internal.pageSize.width;
+    const { height } = doc.internal.pageSize;
+    const { width } = doc.internal.pageSize;
 
     images.forEach(({ img, index }) => {
       const ratio =
@@ -95,7 +95,7 @@ const ImageToPdf: React.FC = () => {
         y,
       });
 
-      doc.addImage(img, "JPEG", x, y, newWidth, newHeight);
+      doc.addImage(img, 'JPEG', x, y, newWidth, newHeight);
 
       if (index < files.length - 1) {
         doc.addPage();
@@ -103,21 +103,21 @@ const ImageToPdf: React.FC = () => {
     });
 
     // Save the PDF
-    doc.save("converted.pdf");
-    saveAs(doc.output("blob"), "converted.pdf");
+    doc.save('converted.pdf');
+    saveAs(doc.output('blob'), 'converted.pdf');
   };
 
   return (
     <Stack spacing={3} mx={2} my={5}>
       <DropzoneArea
-        acceptedFiles={["image/png", "image/jpeg", "image/jpg"]}
+        acceptedFiles={['image/png', 'image/jpeg', 'image/jpg']}
         filesLimit={10}
         fileObjects={files}
         dropzoneText="Drag and drop an image file here or click"
         onChange={handleDrop}
-        showPreviewsInDropzone={true}
+        showPreviewsInDropzone
         onDropRejected={() => {
-          alert("Only image files are accepted");
+          alert('Only image files are accepted');
         }}
       />
       <Button variant="outlined" onClick={handleClick}>

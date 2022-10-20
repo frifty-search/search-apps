@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Button,
   FormControl,
@@ -9,19 +9,19 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import { DropzoneArea } from "mui-file-dropzone";
-import { saveAs } from "file-saver";
+} from '@mui/material';
+import { DropzoneArea } from 'mui-file-dropzone';
+import { saveAs } from 'file-saver';
 
-type ResizeOutput = "JPEG" | "PNG" | "JPG" | "";
+type ResizeOutput = 'JPEG' | 'PNG' | 'JPG' | '';
 
 const PhotoResizer: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
   const [quality, setQuality] = useState<number>(90);
-  const [outputFormat, setOutputFormat] = useState<ResizeOutput>("");
-  const [error, setError] = useState<string>("");
+  const [outputFormat, setOutputFormat] = useState<ResizeOutput>('');
+  const [error, setError] = useState<string>('');
 
   const handleDrop = (files: File[]) => {
     setFiles(files);
@@ -32,17 +32,17 @@ const PhotoResizer: React.FC = () => {
 
     const [file] = files;
     if (!file) {
-      setError("Please select a file");
+      setError('Please select a file');
       return;
     }
 
     if (width === 0 || height === 0) {
-      setError("Please select width and height");
+      setError('Please select width and height');
       return;
     }
 
-    if (outputFormat === "") {
-      setError("Please select output format");
+    if (outputFormat === '') {
+      setError('Please select output format');
       return;
     }
 
@@ -52,17 +52,17 @@ const PhotoResizer: React.FC = () => {
       const img = new Image();
       img.src = reader.result as string;
       img.onload = () => {
-        const elem = document.createElement("canvas");
+        const elem = document.createElement('canvas');
         elem.width = width;
         elem.height = height;
-        const ctx = elem.getContext("2d");
+        const ctx = elem.getContext('2d');
         ctx?.drawImage(img, 0, 0, width, height);
         ctx?.canvas.toBlob(
           (blob) => {
             saveAs(
               blob as Blob,
               `${
-                file.name.split(".")[0]
+                file.name.split('.')[0]
               }-${width}x${height}.${outputFormat.toLowerCase()}`
             );
           },
@@ -77,15 +77,15 @@ const PhotoResizer: React.FC = () => {
   return (
     <Stack spacing={3} mx={2} my={5}>
       <DropzoneArea
-        acceptedFiles={["image/png", "image/jpeg", "image/jpg"]}
+        acceptedFiles={['image/png', 'image/jpeg', 'image/jpg']}
         filesLimit={1}
         fileObjects={files}
         dropzoneText="Drag and drop a png file here or click"
         onChange={handleDrop}
-        showPreviewsInDropzone={true}
-        showFileNamesInPreview={true}
+        showPreviewsInDropzone
+        showFileNamesInPreview
         onDropRejected={() => {
-          alert("Only png files are accepted");
+          alert('Only png files are accepted');
         }}
       />
       <Stack spacing={3} direction="row">
@@ -104,15 +104,15 @@ const PhotoResizer: React.FC = () => {
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Output Format</InputLabel>
           <Select
-            labelId={"demo-simple-select-label"}
-            id={"demo-simple-select"}
+            labelId={'demo-simple-select-label'}
+            id={'demo-simple-select'}
             value={outputFormat}
             onChange={(e) => setOutputFormat(e.target.value as ResizeOutput)}
-            label={"Output Format"}
+            label={'Output Format'}
           >
-            <MenuItem value={"PNG"}>PNG</MenuItem>
-            <MenuItem value={"JPEG"}>JPEG</MenuItem>
-            <MenuItem value={"JPG"}>JPG</MenuItem>
+            <MenuItem value={'PNG'}>PNG</MenuItem>
+            <MenuItem value={'JPEG'}>JPEG</MenuItem>
+            <MenuItem value={'JPG'}>JPG</MenuItem>
           </Select>
         </FormControl>
       </Stack>

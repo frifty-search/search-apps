@@ -1,6 +1,6 @@
-import { Box, ImageList, ImageListItem, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { getUsecaseDataFromServer } from "../../utils/api.utils";
+import { Box, ImageList, ImageListItem, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { getUsecaseDataFromServer } from '../../utils/api.utils';
 
 type UnsplashedImage = {
   url: string;
@@ -31,8 +31,8 @@ const Unsplash: React.FC = () => {
         {unsplashedImage.map((item) => (
           <ImageListItem
             key={item.url}
-            onClick={() => window.open(item.downloadLink, "_blank")}
-            sx={{ cursor: "pointer" }}
+            onClick={() => window.open(item.downloadLink, '_blank')}
+            sx={{ cursor: 'pointer' }}
           >
             <img
               src={`${item.url}?w=164&h=164&fit=crop&auto=format`}

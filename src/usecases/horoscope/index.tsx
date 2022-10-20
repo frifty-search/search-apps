@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   FormControl,
@@ -8,24 +8,24 @@ import {
   SelectChangeEvent,
   Stack,
   Typography,
-} from "@mui/material";
-import { getUsecaseDataFromServer } from "../../utils/api.utils";
-import dayjs from "dayjs";
+} from '@mui/material';
+import dayjs from 'dayjs';
+import { getUsecaseDataFromServer } from '../../utils/api.utils';
 
 const Horoscope: React.FC<{}> = () => {
   const options = [
-    { value: "1", label: "Aries" },
-    { value: "2", label: "Taurus" },
-    { value: "3", label: "Gemini" },
-    { value: "4", label: "Cancer" },
-    { value: "5", label: "Leo" },
-    { value: "6", label: "Virgo" },
-    { value: "7", label: "Libra" },
-    { value: "8", label: "Scorpio" },
-    { value: "9", label: "Sagittarius" },
-    { value: "10", label: "Capricorn" },
-    { value: "11", label: "Aquarius" },
-    { value: "12", label: "Pisces" },
+    { value: '1', label: 'Aries' },
+    { value: '2', label: 'Taurus' },
+    { value: '3', label: 'Gemini' },
+    { value: '4', label: 'Cancer' },
+    { value: '5', label: 'Leo' },
+    { value: '6', label: 'Virgo' },
+    { value: '7', label: 'Libra' },
+    { value: '8', label: 'Scorpio' },
+    { value: '9', label: 'Sagittarius' },
+    { value: '10', label: 'Capricorn' },
+    { value: '11', label: 'Aquarius' },
+    { value: '12', label: 'Pisces' },
   ];
 
   const [selectedoptions, setSelectedoptions] = useState<string>(
@@ -38,7 +38,7 @@ const Horoscope: React.FC<{}> = () => {
   const [result, setResult] = useState<string | null>(null);
 
   useEffect(() => {
-    const date = dayjs().format("YYYY-MM-DD");
+    const date = dayjs().format('YYYY-MM-DD');
     getUsecaseDataFromServer(11, { date }).then((data) => {
       setData(data as { [key: string]: string });
       setResult(data[selectedoptions]);
@@ -51,18 +51,18 @@ const Horoscope: React.FC<{}> = () => {
   };
 
   return (
-    <Box sx={{ width: 1, backgroundColor: "background.main" }}>
+    <Box sx={{ width: 1, backgroundColor: 'background.main' }}>
       <Stack spacing={2} alignItems="left" m={4}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">
             Choose your Zodiac Sign
           </InputLabel>
           <Select
-            labelId={"demo-simple-select-label"}
-            id={"demo-simple-select"}
+            labelId={'demo-simple-select-label'}
+            id={'demo-simple-select'}
             value={selectedoptions}
             onChange={handleZodiacSign}
-            label={"Choose your Zodiac Sign"}
+            label={'Choose your Zodiac Sign'}
           >
             {options.map((option) => (
               <MenuItem value={option.value} key={option.label}>
@@ -76,9 +76,9 @@ const Horoscope: React.FC<{}> = () => {
             <Typography
               variant="h3"
               sx={{
-                fontWeight: "bold",
-                color: "text.primary",
-                textAlign: "left",
+                fontWeight: 'bold',
+                color: 'text.primary',
+                textAlign: 'left',
               }}
             >
               {
@@ -89,8 +89,8 @@ const Horoscope: React.FC<{}> = () => {
             <Typography
               variant="body1"
               sx={{
-                textAlign: "justify",
-                color: "text.primary",
+                textAlign: 'justify',
+                color: 'text.primary',
               }}
             >
               {result}

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import React, { useState } from 'react';
+import { Button, Stack, TextField, Typography } from '@mui/material';
 
 type ResponseData = {
   ok: boolean;
@@ -28,7 +28,7 @@ const UrlShortner: React.FC = () => {
   };
 
   const handleClick = () => {
-    const url = "https://api.shrtco.de/v2/shorten?url=" + value;
+    const url = `https://api.shrtco.de/v2/shorten?url=${value}`;
     fetch(url).then((response) => {
       response.json().then((data: ResponseData) => {
         setShortUrl(data.result);
@@ -41,7 +41,7 @@ const UrlShortner: React.FC = () => {
       <TextField
         label="Enter text to generate short url"
         variant="outlined"
-        value={value ?? ""}
+        value={value ?? ''}
         onChange={handleChange}
         fullWidth
       />
@@ -49,17 +49,17 @@ const UrlShortner: React.FC = () => {
         Generate Short URL
       </Button>
       {shortUrl && (
-        <Stack sx={{ display: "flex", alignItems: "left", textAlign: "left" }}>
+        <Stack sx={{ display: 'flex', alignItems: 'left', textAlign: 'left' }}>
           <Typography variant="body1">
-            <b>Short URL:</b>{" "}
+            <b>Short URL:</b>{' '}
             <a
               href={shortUrl.full_short_link}
               target="_blank"
               rel="noreferrer"
               style={{
-                textDecoration: "none",
-                color: "inherit",
-                cursor: "pointer",
+                textDecoration: 'none',
+                color: 'inherit',
+                cursor: 'pointer',
               }}
             >
               {shortUrl.short_link}
@@ -67,15 +67,15 @@ const UrlShortner: React.FC = () => {
           </Typography>
           <br />
           <Typography variant="body1">
-            <b>Short URL 2:</b>{" "}
+            <b>Short URL 2:</b>{' '}
             <a
               href={shortUrl.full_short_link2}
               target="_blank"
               rel="noreferrer"
               style={{
-                textDecoration: "none",
-                color: "inherit",
-                cursor: "pointer",
+                textDecoration: 'none',
+                color: 'inherit',
+                cursor: 'pointer',
               }}
             >
               {shortUrl.short_link2}

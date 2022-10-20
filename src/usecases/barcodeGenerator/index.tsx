@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -6,10 +6,10 @@ import {
   Snackbar,
   Stack,
   TextField,
-} from "@mui/material";
-import { Close } from "@mui/icons-material";
-import { saveAs } from "file-saver";
-import { copyImageToClipboard } from "copy-image-clipboard";
+} from '@mui/material';
+import { Close } from '@mui/icons-material';
+import { saveAs } from 'file-saver';
+import { copyImageToClipboard } from 'copy-image-clipboard';
 
 const BarcodeGenerator: React.FC = () => {
   const [value, setValue] = useState<string | null>(null);
@@ -24,7 +24,7 @@ const BarcodeGenerator: React.FC = () => {
     event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
 
@@ -32,16 +32,14 @@ const BarcodeGenerator: React.FC = () => {
   };
 
   const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <Close fontSize="small" />
-      </IconButton>
-    </React.Fragment>
+    <IconButton
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={handleClose}
+    >
+      <Close fontSize="small" />
+    </IconButton>
   );
 
   return (
@@ -49,28 +47,28 @@ const BarcodeGenerator: React.FC = () => {
       <TextField
         label="Enter text to generate barcode"
         variant="outlined"
-        value={value ?? ""}
+        value={value ?? ''}
         onChange={handleChange}
       />
       <Button
         variant="outlined"
-        onClick={() => setBarcodeValue(encodeURI(value ?? " "))}
+        onClick={() => setBarcodeValue(encodeURI(value ?? ' '))}
       >
         Generate Barcode
       </Button>
       {barcodeValue && (
         <Stack>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <img
               src={`https://bwipjs-api.metafloor.com/?bcid=code128&text=${barcodeValue}&scale=3&includetext`}
               alt="barcode"
               style={{
-                backgroundColor: "white",
+                backgroundColor: 'white',
               }}
             />
           </Box>
           <Box
-            sx={{ display: "flex", justifyContent: "space-between" }}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
             paddingX={6}
             paddingY={1}
           >
@@ -79,7 +77,7 @@ const BarcodeGenerator: React.FC = () => {
               onClick={() => {
                 saveAs(
                   `https://bwipjs-api.metafloor.com/?bcid=code128&text=${barcodeValue}&scale=3&includetext`,
-                  "barcode.jpg"
+                  'barcode.jpg'
                 );
               }}
             >
@@ -95,7 +93,7 @@ const BarcodeGenerator: React.FC = () => {
                     setOpen(true);
                   })
                   .catch((e) => {
-                    console.log("Error: ", e.message);
+                    console.log('Error: ', e.message);
                   });
               }}
             >

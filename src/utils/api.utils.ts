@@ -24,13 +24,13 @@ export type Apps = {
 
 export async function fetchSearchAPI(q: string): Promise<Apps> {
   const response = await fetch(`${BASE_URL}/search?q=${q}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
       authorization: `Bearer ${id}`,
     },
   });
   if (!response.ok) {
-    throw new Error("Query Not Found!");
+    throw new Error('Query Not Found!');
   }
   const data = await response.json();
   return data;
@@ -44,9 +44,9 @@ export async function getUsecaseDataFromServer(
   Object.keys(query).forEach((key) => url.searchParams.append(key, query[key]));
 
   const response = await fetch(url.toString(), {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
   if (!response.ok) {

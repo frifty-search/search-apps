@@ -1,11 +1,11 @@
-import React from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import React from 'react';
+import { Box, Button, Stack, Typography } from '@mui/material';
 
 const PythonNotebook: React.FC<{
   data: string;
 }> = ({ data }: { data: string }) => {
   return (
-    <Box sx={{ width: 1, backgroundColor: "background.main", m: 4 }}>
+    <Box sx={{ width: 1, backgroundColor: 'background.main', m: 4 }}>
       <Stack
         direction="row"
         spacing={2}
@@ -15,7 +15,7 @@ const PythonNotebook: React.FC<{
       >
         <Typography variant="h6" component="h2">
           You can launch an interactive python notebook directly from your
-          Google Drive using Colab. {"   "}
+          Google Drive using Colab. {'   '}
           <Button
             variant="contained"
             color="primary"

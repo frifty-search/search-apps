@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   DumbCharades,
   AgeCalculator,
@@ -19,9 +19,9 @@ import {
   PngToJpeg,
   ImageToPdf,
   PhotoResizer,
-} from "../../usecases";
-import { Apps } from "../../utils/api.utils";
-import { AppName } from "../../utils/appName.utils";
+} from '../../usecases';
+import { Apps } from '../../utils/api.utils';
+import { AppName } from '../../utils/appName.utils';
 
 export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
   switch (appId) {

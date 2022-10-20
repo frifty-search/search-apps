@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from 'react';
 import {
   Button,
   FormControl,
@@ -10,25 +10,25 @@ import {
   TextField,
   Typography,
   useTheme,
-} from "@mui/material";
+} from '@mui/material';
 
 const EmiCalculator: React.FC<{}> = () => {
   const options = [
     {
-      value: "12",
-      label: "Monthly",
+      value: '12',
+      label: 'Monthly',
     },
     {
-      value: "4",
-      label: "Quaterly",
+      value: '4',
+      label: 'Quaterly',
     },
     {
-      value: "2",
-      label: "Half Yearly",
+      value: '2',
+      label: 'Half Yearly',
     },
     {
-      value: "1",
-      label: "Annually",
+      value: '1',
+      label: 'Annually',
     },
   ];
 
@@ -39,12 +39,12 @@ const EmiCalculator: React.FC<{}> = () => {
     timePeriod: 0,
   });
 
-  const [result, setResult] = useState("");
-  const [error, setError] = useState("");
+  const [result, setResult] = useState('');
+  const [error, setError] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "principal") {
-      console.log("principal", parseFloat(e.target.value));
+    if (e.target.name === 'principal') {
+      console.log('principal', parseFloat(e.target.value));
     }
     setValues({
       ...values,
@@ -95,13 +95,10 @@ const EmiCalculator: React.FC<{}> = () => {
     const n = timePeriod * paymentFrequency;
     const r = interestRate / (paymentFrequency * 100);
 
-    const emi = Math.round(
-      (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1)
-    );
+    const emi = Math.round((principal * r * (1 + r) ** n) / ((1 + r) ** n - 1));
 
-    setError("");
+    setError('');
     setResult(`You have to pay ${n} installment(s), each worth ${emi}.`);
-    return;
   };
 
   return (
@@ -110,20 +107,20 @@ const EmiCalculator: React.FC<{}> = () => {
         <TextField
           fullWidth
           value={values.principal.toString()}
-          label={"Principal/Loan Amount"}
+          label={'Principal/Loan Amount'}
           onChange={handleChange}
-          name={"principal"}
-          variant={"outlined"}
+          name={'principal'}
+          variant={'outlined'}
           required
         />
 
         <TextField
           fullWidth
           defaultValue={values.interestRate.toString()}
-          label={"Annual Interest Rate (in %)"}
+          label={'Annual Interest Rate (in %)'}
           onChange={handleChange}
-          name={"interestRate"}
-          variant={"outlined"}
+          name={'interestRate'}
+          variant={'outlined'}
           required
         />
       </Stack>
@@ -133,11 +130,11 @@ const EmiCalculator: React.FC<{}> = () => {
             Payment Frequency
           </InputLabel>
           <Select
-            labelId={"demo-simple-select-label"}
-            id={"demo-simple-select"}
+            labelId={'demo-simple-select-label'}
+            id={'demo-simple-select'}
             value={values.paymentFrequency.toString()}
             onChange={handleFrequencyPayment}
-            label={"Payment Frequency"}
+            label={'Payment Frequency'}
           >
             {options.map((option) => (
               <MenuItem value={option.value} key={option.label}>
@@ -150,10 +147,10 @@ const EmiCalculator: React.FC<{}> = () => {
         <TextField
           fullWidth
           defaultValue={values.timePeriod.toString()}
-          label={"Loan Tenure in Years"}
+          label={'Loan Tenure in Years'}
           onChange={handleChange}
-          name={"timePeriod"}
-          variant={"outlined"}
+          name={'timePeriod'}
+          variant={'outlined'}
           required
         />
       </Stack>
@@ -170,8 +167,8 @@ const EmiCalculator: React.FC<{}> = () => {
         <Typography
           variant="h6"
           sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           {result}
@@ -182,8 +179,8 @@ const EmiCalculator: React.FC<{}> = () => {
         <Typography
           variant="h6"
           sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
           style={{ color: theme.palette.error.main }}
         >

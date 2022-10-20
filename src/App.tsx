@@ -1,30 +1,30 @@
-import React, { FormEvent, useState } from "react";
-import { Box } from "@mui/material";
+import React, { FormEvent, useState } from 'react';
+import { Box } from '@mui/material';
 
-import { Main } from "./components/main/main.components";
-import { Apps, fetchSearchAPI } from "./utils/api.utils";
-import { SearchBox } from "./components/searchBox/searchBox.components";
+import { Main } from './components/main/main.components';
+import { Apps, fetchSearchAPI } from './utils/api.utils';
+import { SearchBox } from './components/searchBox/searchBox.components';
 
-type AppState = "start" | "loading" | "loaded" | "error";
+type AppState = 'start' | 'loading' | 'loaded' | 'error';
 
 const App: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<Apps | null>(null);
-  const [state, setState] = useState<AppState>("start");
+  const [state, setState] = useState<AppState>('start');
 
   const handleSumbit = (e: FormEvent) => {
     e.preventDefault();
 
-    setState("loading");
+    setState('loading');
     fetchSearchAPI(searchQuery)
       .then((res) => {
         setData(res);
-        setState("loaded");
+        setState('loaded');
       })
       .catch((err) => {
         setError(err);
-        setState("error");
+        setState('error');
       });
   };
 
@@ -37,10 +37,10 @@ const App: React.FC = () => {
       sx={{
         m: 5,
         p: 5,
-        alignItems: "center",
-        justifyContent: "center",
-        display: "flex",
-        flexDirection: "column",
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <SearchBox
@@ -49,12 +49,12 @@ const App: React.FC = () => {
         placeholder="Search..."
         label="Enter the Query"
       />
-      {state === "loading" ? (
+      {state === 'loading' ? (
         <h1>Loading...</h1>
-      ) : state === "error" ? (
+      ) : state === 'error' ? (
         <h1>{error?.message}</h1>
-      ) : state === "loaded" ? (
-        <Main data={data!!} query={searchQuery} />
+      ) : state === 'loaded' ? (
+        <Main data={data!} query={searchQuery} />
       ) : (
         <></>
       )}

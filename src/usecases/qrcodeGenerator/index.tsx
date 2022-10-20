@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -6,10 +6,10 @@ import {
   Snackbar,
   Stack,
   TextField,
-} from "@mui/material";
-import { Close } from "@mui/icons-material";
-import { saveAs } from "file-saver";
-import { copyImageToClipboard } from "copy-image-clipboard";
+} from '@mui/material';
+import { Close } from '@mui/icons-material';
+import { saveAs } from 'file-saver';
+import { copyImageToClipboard } from 'copy-image-clipboard';
 
 // import QRCode from "react-qr-code";
 
@@ -26,7 +26,7 @@ const QrcodeGenerator: React.FC = () => {
     event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
 
@@ -34,16 +34,14 @@ const QrcodeGenerator: React.FC = () => {
   };
 
   const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <Close fontSize="small" />
-      </IconButton>
-    </React.Fragment>
+    <IconButton
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={handleClose}
+    >
+      <Close fontSize="small" />
+    </IconButton>
   );
 
   return (
@@ -51,26 +49,26 @@ const QrcodeGenerator: React.FC = () => {
       <TextField
         label="Enter text to generate QR code"
         variant="outlined"
-        value={value ?? ""}
+        value={value ?? ''}
         onChange={handleChange}
         fullWidth
       />
       <Button
         variant="outlined"
-        onClick={() => setQrValue(encodeURI(value ?? ""))}
+        onClick={() => setQrValue(encodeURI(value ?? ''))}
       >
         Generate QR Code
       </Button>
       {qrValue && (
         <Stack>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <img
               src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrValue}&size=200x200`}
               alt="QR Code"
             />
           </Box>
           <Box
-            sx={{ display: "flex", justifyContent: "space-between" }}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
             paddingX={6}
             paddingY={1}
           >
@@ -79,7 +77,7 @@ const QrcodeGenerator: React.FC = () => {
               onClick={() => {
                 saveAs(
                   `https://api.qrserver.com/v1/create-qr-code/?data=${qrValue}&size=200x200`,
-                  "qrcode.png"
+                  'qrcode.png'
                 );
               }}
             >
@@ -95,7 +93,7 @@ const QrcodeGenerator: React.FC = () => {
                     setOpen(true);
                   })
                   .catch((e) => {
-                    console.log("Error: ", e.message);
+                    console.log('Error: ', e.message);
                   });
               }}
             >
