@@ -1,15 +1,16 @@
 {
   "name": "search-apps",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "usecase:install": "cd usecase && npm install",
-    "usecase:create": "schematics ./usecase:usecase --debug=false --force",
+    "usecase:create": "schematics ./usecase:usecase --debug=false --force && npm run usecase:format",
     "usecase:build": "cd usecase && npm run build",
+    "usecase:format": "prettier --write src/components/utils/renderApps.utils.tsx src/usecases/index.tsx src/utils/appName.utils.ts",
     "prepare": "husky install",
     "format": "prettier --write src/**/*.ts{,x}"
   },

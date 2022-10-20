@@ -9,9 +9,9 @@ import {
   move,
   branchAndMerge,
   chain,
-} from "@angular-devkit/schematics";
+} from '@angular-devkit/schematics';
 
-import { strings } from "@angular-devkit/core";
+import { strings } from '@angular-devkit/core';
 
 interface UseCaseSchema {
   name: string;
@@ -22,7 +22,7 @@ interface UseCaseSchema {
 // per file.
 export function usecase(_options: UseCaseSchema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const sourceTemplates = url("./files");
+    const sourceTemplates = url('./files');
     const sourceParametrizedTemplates = apply(sourceTemplates, [
       template({
         ..._options,
@@ -31,19 +31,19 @@ export function usecase(_options: UseCaseSchema): Rule {
       move(`src/usecases/`),
     ]);
 
-    if (tree.getDir("src/usecases")) {
+    if (tree.getDir('src/usecases')) {
       const renderUtilsFile = tree.read(
-        "src/components/utils/renderApps.utils.tsx"
+        'src/components/utils/renderApps.utils.tsx'
       );
 
       if (!renderUtilsFile) {
-        throw new Error("src/utils/renderApps.utils.tsx not found");
+        throw new Error('src/utils/renderApps.utils.tsx not found');
       }
 
       const renderUtilsFileContent = renderUtilsFile.toString();
       let newRenderUtilsFileContent = renderUtilsFileContent.replace(
-        `} from "../../usecases";`,
-        ` ${strings.classify(_options.name)} } from "../../usecases";`
+        `} from '../../usecases';`,
+        ` ${strings.classify(_options.name)} } from '../../usecases';`
       );
       newRenderUtilsFileContent = newRenderUtilsFileContent.replace(
         /\}[\s]\};/gm,
@@ -60,24 +60,24 @@ export function usecase(_options: UseCaseSchema): Rule {
       );
 
       tree.overwrite(
-        "src/components/utils/renderApps.utils.tsx",
+        'src/components/utils/renderApps.utils.tsx',
         newRenderUtilsFileContent
       );
 
-      const appUtilsFile = tree.read("src/utils/appName.utils.ts");
+      const appUtilsFile = tree.read('src/utils/appName.utils.ts');
       if (!appUtilsFile) {
-        throw new Error("src/utils/appName.utils.ts not found");
+        throw new Error('src/utils/appName.utils.ts not found');
       }
       const appUtilsFileContent = appUtilsFile.toString();
       const newAppUtilsFileContent = appUtilsFileContent.replace(
         `};`,
         `  ${_options.name.toUpperCase()}: ${_options.appId}, };`
       );
-      tree.overwrite("src/utils/appName.utils.ts", newAppUtilsFileContent);
+      tree.overwrite('src/utils/appName.utils.ts', newAppUtilsFileContent);
 
-      const usecaseIndexFile = tree.read("src/usecases/index.tsx");
+      const usecaseIndexFile = tree.read('src/usecases/index.tsx');
       if (!usecaseIndexFile) {
-        throw new Error("src/usecases/index.tsx not found");
+        throw new Error('src/usecases/index.tsx not found');
       }
 
       const usecaseIndexFileContent = usecaseIndexFile.toString();
@@ -92,7 +92,7 @@ export function usecase(_options: UseCaseSchema): Rule {
         /[\s]};/gm,
         `  ${strings.classify(_options.name)}, };`
       );
-      tree.overwrite("src/usecases/index.tsx", newUsecaseIndexFileContent);
+      tree.overwrite('src/usecases/index.tsx', newUsecaseIndexFileContent);
 
       return branchAndMerge(chain([mergeWith(sourceParametrizedTemplates)]))(
         tree,
@@ -100,6 +100,6 @@ export function usecase(_options: UseCaseSchema): Rule {
       );
     }
 
-    throw new Error("No usecase folder found");
+    throw new Error('No usecase folder found');
   };
 }
