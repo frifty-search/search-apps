@@ -72,10 +72,10 @@ It gives you a prompt to name the use-case,
 
 # Testing Locally
 
-Use `npm start` or `yarn start` command to run the project locally.&#x20;
+Use `npm run dev` or `yarn dev` command to run the project locally.&#x20;
 
 ```bash
-npm start or yarn start
+npm run dev or yarn dev
 ```
 
 it automatically opens your default browser.
