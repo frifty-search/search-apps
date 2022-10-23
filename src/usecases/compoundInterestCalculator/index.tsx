@@ -21,13 +21,8 @@ const CompoundInterestCalculator: React.FC = () => {
     var t = parseInt(time);
     var p = parseInt(principal);
     var i = parseFloat(interest);
-    var f=parseInt(frequency);
-    if (
-      t === 0 &&
-      p === 0 &&
-      i === 0 &&
-      f === 0
-    ) {
+    var f = parseInt(frequency);
+    if (t === 0 && p === 0 && i === 0 && f === 0) {
       setError(
         `Principal Amount,  Time Duration, Interest Frequency and Interest Rate cannot be 0.`
       );
@@ -50,17 +45,19 @@ const CompoundInterestCalculator: React.FC = () => {
       setError(`Interest Frequency cannot be 0.`);
       return;
     }
-    i/=100;
-    
-    var power=(f*t);
-   
-    var cp_int =p* Math.pow((1 + i/f), power);
+    i /= 100;
 
-    setCompound_amt(cp_int-p);
+    var power = f * t;
+
+    var cp_int = p * Math.pow(1 + i / f, power);
+
+    setCompound_amt(cp_int - p);
     setError('');
-    setResult(`Compound Interest will be ${cp_int-p} , with net worth ${cp_int}.`);
+    setResult(
+      `Compound Interest will be ${cp_int - p} , with net worth ${cp_int}.`
+    );
     console.log(compound_amt);
-    
+
     return;
   };
   return (
@@ -93,7 +90,7 @@ const CompoundInterestCalculator: React.FC = () => {
             setInterest(e.target.value);
           }}
         />
-          <TextField
+        <TextField
           id="frequency"
           label="Compound Interest Frequency Anually"
           value={frequency}
@@ -103,11 +100,19 @@ const CompoundInterestCalculator: React.FC = () => {
           }}
         />
       </Stack>
-      <Button variant="outlined" type="submit" sx={{
-        mt:1,boxShadow:2
-      }} onClick={handleClick}>Calculate</Button>
-    
-    {result.length !== 0 && (
+      <Button
+        variant="outlined"
+        type="submit"
+        sx={{
+          mt: 1,
+          boxShadow: 2,
+        }}
+        onClick={handleClick}
+      >
+        Calculate
+      </Button>
+
+      {result.length !== 0 && (
         <Typography
           variant="h6"
           sx={{
@@ -126,13 +131,11 @@ const CompoundInterestCalculator: React.FC = () => {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
-        //  style={{ color: theme.palette.error.main }}
+          //  style={{ color: theme.palette.error.main }}
         >
           {error}
         </Typography>
       )}
-    
-    
     </Stack>
   );
 };
