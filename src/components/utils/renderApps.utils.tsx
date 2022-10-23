@@ -19,6 +19,8 @@ import {
   PngToJpeg,
   ImageToPdf,
   PhotoResizer,
+  CompoundInterestCalculator,
+  CgpaToPercentage,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -63,5 +65,9 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <ImageToPdf />;
     case AppName.PHOTORESIZER:
       return <PhotoResizer />;
+    case AppName.COMPOUND_INTEREST_CALCULATOR:
+      return <CompoundInterestCalculator />;
+    case AppName.CGPA_TO_PERCENTAGE:
+      return <CgpaToPercentage />;
   }
 };
