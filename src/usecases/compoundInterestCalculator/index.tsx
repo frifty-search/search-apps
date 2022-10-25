@@ -14,14 +14,13 @@ const CompoundInterestCalculator: React.FC = () => {
   const [time, setTime] = useState<string>('0');
   const [interest, setInterest] = useState<string>('0');
   const [frequency, setFrequency] = useState<string>('0');
-  const [compound_amt, setCompound_amt] = useState<number>();
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
   const handleClick = () => {
-    var t = parseInt(time);
-    var p = parseInt(principal);
-    var i = parseFloat(interest);
-    var f = parseInt(frequency);
+    const t = parseInt(time);
+    const p = parseInt(principal);
+    let i = parseFloat(interest);
+    const f = parseInt(frequency);
     if (t === 0 && p === 0 && i === 0 && f === 0) {
       setError(
         `Principal Amount,  Time Duration, Interest Frequency and Interest Rate cannot be 0.`
@@ -47,16 +46,14 @@ const CompoundInterestCalculator: React.FC = () => {
     }
     i /= 100;
 
-    var power = f * t;
+    const power = f * t;
 
-    var cp_int = p * Math.pow(1 + i / f, power);
+    const cp_int = p * Math.pow(1 + i / f, power);
 
-    setCompound_amt(cp_int - p);
     setError('');
     setResult(
       `Compound Interest will be ${cp_int - p} , with net worth ${cp_int}.`
     );
-    console.log(compound_amt);
 
     return;
   };
@@ -81,6 +78,8 @@ const CompoundInterestCalculator: React.FC = () => {
             setTime(e.target.value);
           }}
         />
+      </Stack>
+      <Stack spacing={3} direction={'row'}>
         <TextField
           id="interest_rate"
           label="Rate of Interest"
@@ -92,7 +91,7 @@ const CompoundInterestCalculator: React.FC = () => {
         />
         <TextField
           id="frequency"
-          label="Compound Interest Frequency Anually"
+          label="Interest Frequency Anually"
           value={frequency}
           variant="outlined"
           onChange={(e) => {

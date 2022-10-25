@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Stack,
-  TextField,
-  Typography,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-} from '@mui/material';
+import { Button, Stack, TextField, Typography } from '@mui/material';
 
 const CgpaToPercentage: React.FC = () => {
   const [cgpa, setCgpa] = useState<string>('0');
@@ -24,7 +15,7 @@ const CgpaToPercentage: React.FC = () => {
     var percent = current_cg * 9.5;
     setPercentage(percentage);
     setError('');
-    setResult(`${current_cg} CGPA will be ${percent} %`);
+    setResult(`${current_cg} CGPA will be ${percent.toFixed(2)} %`);
     return;
   };
   return (
@@ -34,6 +25,7 @@ const CgpaToPercentage: React.FC = () => {
           id="cgpa"
           label="CGPA"
           value={cgpa}
+          fullWidth
           onChange={(e) => {
             setCgpa(e.target.value);
           }}
