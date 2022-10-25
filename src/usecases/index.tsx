@@ -17,7 +17,7 @@ import PercentageCalculator from './percentageCalculator';
 import PngToJpeg from './pngToJpeg';
 import ImageToPdf from './imageToPdf';
 import PhotoResizer from './photoResizer';
-
+import CompoundInterestCalculator from './compoundInterestCalculator';
 export {
   DumbCharades,
   AgeCalculator,
@@ -38,4 +38,5 @@ export {
   PngToJpeg,
   ImageToPdf,
   PhotoResizer,
+  CompoundInterestCalculator,
 };
