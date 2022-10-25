@@ -14,7 +14,6 @@ const CompoundInterestCalculator: React.FC = () => {
   const [time, setTime] = useState<string>('0');
   const [interest, setInterest] = useState<string>('0');
   const [frequency, setFrequency] = useState<string>('0');
-
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
   const handleClick = () => {
@@ -47,9 +46,9 @@ const CompoundInterestCalculator: React.FC = () => {
     }
     i /= 100;
 
-    var power = f * t;
+    const power = f * t;
 
-    var cp_int = p * Math.pow(1 + i / f, power);
+    const cp_int = p * Math.pow(1 + i / f, power);
 
     setError('');
     setResult(
