@@ -18,6 +18,12 @@ import PngToJpeg from './pngToJpeg';
 import ImageToPdf from './imageToPdf';
 import PhotoResizer from './photoResizer';
 import CompoundInterestCalculator from './compoundInterestCalculator';
+import KrutidevToUnicode from './krutidevToUnicode';
+import Finshots from './finshots';
+import SipCalculator from './sipCalculator';
+import HomeLoanCalculator from './homeLoanCalculator';
+import PhotoSizeReducer from './photoSizeReducer';
+import ImageToText from './imageToText';
 export {
   DumbCharades,
   AgeCalculator,
@@ -39,4 +45,10 @@ export {
   ImageToPdf,
   PhotoResizer,
   CompoundInterestCalculator,
+  KrutidevToUnicode,
+  Finshots,
+  SipCalculator,
+  HomeLoanCalculator,
+  PhotoSizeReducer,
+  ImageToText,
 };

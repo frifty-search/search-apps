@@ -20,6 +20,12 @@ import {
   ImageToPdf,
   PhotoResizer,
   CompoundInterestCalculator,
+  KrutidevToUnicode,
+  Finshots,
+  SipCalculator,
+  HomeLoanCalculator,
+  PhotoSizeReducer,
+  ImageToText,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -66,5 +72,17 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <PhotoResizer />;
     case AppName.COMPOUND_INTEREST_CALCULATOR:
       return <CompoundInterestCalculator />;
+    case AppName.KRUTIDEV_TO_UNICODE:
+      return <KrutidevToUnicode />;
+    case AppName.FINSHOTS:
+      return <Finshots />;
+    case AppName.SIP_CALCULATOR:
+      return <SipCalculator />;
+    case AppName.HOME_LOAN_CALCULATOR:
+      return <HomeLoanCalculator />;
+    case AppName.PHOTO_SIZE_REDUCER:
+      return <PhotoSizeReducer />;
+    case AppName.IMAGE_TO_TEXT:
+      return <ImageToText />;
   }
 };
