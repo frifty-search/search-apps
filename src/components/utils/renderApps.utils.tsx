@@ -70,7 +70,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <CompoundInterestCalculator />;
     case AppName.CGPA_TO_PERCENTAGE:
       return <CgpaToPercentage />;
-      case AppName.AIR_POLLUTION:
+    case AppName.AIR_POLLUTION:
       return <AirPollution />;
   }
 };
