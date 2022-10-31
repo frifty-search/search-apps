@@ -19,6 +19,7 @@ import ImageToPdf from './imageToPdf';
 import PhotoResizer from './photoResizer';
 import CompoundInterestCalculator from './compoundInterestCalculator';
 import CgpaToPercentage from './cgpaToPercentage';
+import AirPollution from './airPollution';
 export {
   DumbCharades,
   AgeCalculator,
@@ -41,4 +42,5 @@ export {
   PhotoResizer,
   CompoundInterestCalculator,
   CgpaToPercentage,
+  AirPollution,
 };

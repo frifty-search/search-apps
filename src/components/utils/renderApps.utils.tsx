@@ -21,6 +21,7 @@ import {
   PhotoResizer,
   CompoundInterestCalculator,
   CgpaToPercentage,
+  AirPollution,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -69,5 +70,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <CompoundInterestCalculator />;
     case AppName.CGPA_TO_PERCENTAGE:
       return <CgpaToPercentage />;
+    case AppName.AIR_POLLUTION:
+      return <AirPollution />;
   }
 };
