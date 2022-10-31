@@ -21,38 +21,39 @@ type AirPollutionResponse = {
   } | null;
   error: string | null;
 };
-const levels=["","Clean Air","Moderately Polluted","Unhealthy for Sensitive Groups","Unhealthy","Very Unhealthy","Hazardous to Health"];
-const colors=["","green","yellow","orange","red","purple","mahroon"];
+const levels = [
+  '',
+  'Clean Air',
+  'Moderately Polluted',
+  'Unhealthy for Sensitive Groups',
+  'Unhealthy',
+  'Very Unhealthy',
+  'Hazardous to Health',
+];
+const colors = ['', 'green', 'yellow', 'orange', 'red', 'purple', 'mahroon'];
 const AirPollution: React.FC = () => {
   const [city, setCity] = useState<string>('');
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
-const[aqi,setAqi]=useState(0);
+  const [aqi, setAqi] = useState(0);
   const handleClick = async () => {
-    const data = (await getUsecaseDataFromServer(
-      13,
-      {
-        city
-      }
-    )) as AirPollutionResponse;
-console.log(data.airPollution?.main.aqi);
+    const data = (await getUsecaseDataFromServer(13, {
+      city,
+    })) as AirPollutionResponse;
+    console.log(data.airPollution?.main.aqi);
 
-    if(data.error) {
+    if (data.error) {
       setError(data.error);
       console.log(data.error);
       setResult('');
-      
+
       return;
-    } 
-    
-    setResult(`Air Quality Index of ${city} is ${data.airPollution?.main.aqi}`)
-    if(data.airPollution?.main.aqi)
-    setAqi(data.airPollution?.main.aqi);
-setError('');
+    }
 
-    
-  }
-
+    setResult(`Air Quality Index of ${city} is ${data.airPollution?.main.aqi}`);
+    if (data.airPollution?.main.aqi) setAqi(data.airPollution?.main.aqi);
+    setError('');
+  };
 
   return (
     <Stack spacing={3} mx={1} my={5}>
@@ -91,28 +92,27 @@ setError('');
         >
           {result}
           <Box
-        component="span"
-        sx={{
-          display: 'block',
-          p: 1,
-          m: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'dark' ?colors[aqi]:colors[aqi]),
-          color: (theme) =>
-            theme.palette.mode === 'dark' ? "white" : 'white',
-          border: '1px solid',
-          borderColor: (theme) =>
-            theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-          borderRadius: 2,
-          fontSize: '0.875rem',
-          fontWeight: '700',
-          textAlign:'center',
-        }}
-      >
-        {levels[aqi]}
-      </Box>
-
+            component="span"
+            sx={{
+              display: 'block',
+              p: 1,
+              m: 1,
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark' ? colors[aqi] : colors[aqi],
+              color: (theme) =>
+                theme.palette.mode === 'dark' ? 'white' : 'white',
+              border: '1px solid',
+              borderColor: (theme) =>
+                theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
+              borderRadius: 2,
+              fontSize: '0.875rem',
+              fontWeight: '700',
+              textAlign: 'center',
+            }}
+          >
+            {levels[aqi]}
+          </Box>
         </Typography>
-        
       )}
 
       {error.length !== 0 && (
