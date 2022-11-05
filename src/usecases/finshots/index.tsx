@@ -1,77 +1,40 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  ImageList,
-  Typography,
-} from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getUsecaseDataFromServer } from '../../utils/api.utils';
 
-type FinshotsResponse = {
+type FinshotResponse = {
   title: string;
-  description: string;
+  date: string;
   image: string;
-  link: string;
-  pubDate: string;
+  content: string;
 };
 
 const Finshots: React.FC = () => {
-  const [finshots, setFinshots] = useState<FinshotsResponse[]>([]);
+  const [finshot, setFinshot] = useState<FinshotResponse | null>(null);
 
   useEffect(() => {
     getUsecaseDataFromServer(38, {}).then((data) => {
-      setFinshots(data as FinshotsResponse[]);
+      setFinshot(data as FinshotResponse);
     });
   }, []);
 
-  return (
-    <Box>
-      <Typography variant="h5" align="center">
-        Finshots from Finshots by Frifty
+  return !finshot ? null : (
+    <Stack spacing={2} mx={2} my={5}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        {finshot.title}
       </Typography>
-      <ImageList
-        variant="quilted"
-        cols={2}
-        sx={{
-          maxHeight: 450,
-          overflowY: 'auto',
+      <Typography variant="h6" component="h2" gutterBottom>
+        {finshot.date}
+      </Typography>
+      <img src={finshot.image} alt={finshot.title} />
+      <div
+        dangerouslySetInnerHTML={{ __html: finshot.content }}
+        style={{
+          maxHeight: '300px',
+          overflowY: 'scroll',
         }}
-      >
-        {finshots.map((finshot) => (
-          <Card
-            key={finshot.title}
-            sx={{
-              bgcolor: 'background.paper',
-              cursor: 'pointer',
-              mx: 1,
-              my: 1,
-            }}
-            onClick={() => window.open(finshot.link, '_blank')}
-          >
-            <CardMedia
-              component="img"
-              height="140"
-              image={finshot.image}
-              alt={finshot.title}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {finshot.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {finshot.description}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {finshot.pubDate}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </ImageList>
-    </Box>
+      />
+    </Stack>
   );
 };
 

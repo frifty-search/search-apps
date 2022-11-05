@@ -26,6 +26,7 @@ import PhotoSizeReducer from './photoSizeReducer';
 import ImageToText from './imageToText';
 import CgpaToPercentage from './cgpaToPercentage';
 import AirPollution from './airPollution';
+import AnandBazaarPatrika from './anandBazaarPatrika';
 export {
   DumbCharades,
   AgeCalculator,
@@ -55,4 +56,5 @@ export {
   ImageToText,
   CgpaToPercentage,
   AirPollution,
+  AnandBazaarPatrika,
 };

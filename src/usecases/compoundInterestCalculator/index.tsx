@@ -68,6 +68,7 @@ const CompoundInterestCalculator: React.FC = () => {
             setPrincipal(e.target.value);
           }}
           variant="outlined"
+          fullWidth
         />
         <TextField
           id="duration"
@@ -77,6 +78,7 @@ const CompoundInterestCalculator: React.FC = () => {
           onChange={(e) => {
             setTime(e.target.value);
           }}
+          fullWidth
         />
       </Stack>
       <Stack spacing={3} direction={'row'}>
@@ -88,6 +90,7 @@ const CompoundInterestCalculator: React.FC = () => {
           onChange={(e) => {
             setInterest(e.target.value);
           }}
+          fullWidth
         />
         <TextField
           id="frequency"
@@ -97,6 +100,7 @@ const CompoundInterestCalculator: React.FC = () => {
           onChange={(e) => {
             setFrequency(e.target.value);
           }}
+          fullWidth
         />
       </Stack>
       <Button

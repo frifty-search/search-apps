@@ -27,4 +27,5 @@ export const AppName = {
   IMAGE_TO_TEXT: 35,
   CGPA_TO_PERCENTAGE: 28,
   AIR_POLLUTION: 13,
+  ANAND_BAZAAR_PATRIKA: 36,
 };

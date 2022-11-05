@@ -39,7 +39,7 @@ const PngToJpeg: React.FC = () => {
         acceptedFiles={['image/png']}
         filesLimit={1}
         fileObjects={files}
-        dropzoneText="Drag and drop a png file here or click"
+        dropzoneText="Click to Upload"
         onChange={handleDrop}
         showPreviewsInDropzone
         showFileNamesInPreview

@@ -42,16 +42,21 @@ const HomeLoanCalculator: React.FC = () => {
 
     const emi = principal * r * ((1 + r) ** n / ((1 + r) ** n - 1));
 
+    const numberFormat = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumSignificantDigits: 3,
+    });
+
     setError('');
     setResult(
-      `Your Total Payable Amount is ${Math.round(
-        emi * n
-      )}.Your EMI is ${Math.round(
-        emi
-      )} for ${n} months. Total Interest Payable is ${
-        Math.round(emi * n) - principal
-      }`
+      `Your total payable amount is ${numberFormat.format(Math.round(emi * n))}.
+      Your EMI is ${numberFormat.format(emi)} for ${n} months.
+      Total interest payable is ${numberFormat.format(
+        Math.round(emi * n - principal)
+      )}`
     );
+    return;
   };
 
   return (
@@ -60,7 +65,7 @@ const HomeLoanCalculator: React.FC = () => {
         <TextField
           fullWidth
           defaultValue={values.principal.toString()}
-          label={'Monthly Investment'}
+          label={'Loan Amount '}
           onChange={handleChange}
           name={'principal'}
           variant={'outlined'}
@@ -102,6 +107,7 @@ const HomeLoanCalculator: React.FC = () => {
           sx={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            textAlign: 'left',
           }}
         >
           {result}

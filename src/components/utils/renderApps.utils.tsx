@@ -28,6 +28,7 @@ import {
   ImageToText,
   CgpaToPercentage,
   AirPollution,
+  AnandBazaarPatrika,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -90,5 +91,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <CgpaToPercentage />;
     case AppName.AIR_POLLUTION:
       return <AirPollution />;
+    case AppName.ANAND_BAZAAR_PATRIKA:
+      return <AnandBazaarPatrika />;
   }
 };

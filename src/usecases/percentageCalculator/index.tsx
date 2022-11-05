@@ -8,10 +8,15 @@ const PercentageCalculator: React.FC = () => {
   const [error, setError] = useState<string>('');
 
   const calculatePercentage = () => {
-    if (number === 0 || total === 0) {
-      setError('Please enter a number');
+    if (number === 0) {
+      setError('Please enter numerator');
       return;
     }
+    if (total === 0) {
+      setError('Please enter denominator');
+      return;
+    }
+
     if (number > total) {
       setError('Number cannot be greater than total');
       return;
@@ -26,17 +31,26 @@ const PercentageCalculator: React.FC = () => {
     <Stack spacing={2} mx={2} my={5}>
       <Stack spacing={2} direction="row">
         <TextField
-          label="Number"
+          label="Numerator"
           type="number"
           value={number}
           onChange={(e) => setNumber(Number(e.target.value))}
           fullWidth
         />
+        <Typography variant="h3">/</Typography>
         <TextField
-          label="Total"
+          label="Denominator"
           type="number"
           value={total}
           onChange={(e) => setTotal(Number(e.target.value))}
+          fullWidth
+        />
+        <Typography variant="h3">=</Typography>
+        <TextField
+          label="Percentage"
+          type="number"
+          value={percentage === -1 ? '' : percentage}
+          disabled
           fullWidth
         />
       </Stack>
@@ -46,11 +60,6 @@ const PercentageCalculator: React.FC = () => {
       {error && (
         <Typography color="error" variant="body1">
           {error}
-        </Typography>
-      )}
-      {percentage !== -1 && (
-        <Typography variant="body1">
-          {number} is {percentage}% of {total}
         </Typography>
       )}
     </Stack>

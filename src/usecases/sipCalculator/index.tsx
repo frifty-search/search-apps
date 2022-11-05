@@ -42,10 +42,18 @@ const SipCalculator: React.FC = () => {
 
     const sip = Math.round(principal * (1 + r) * (((1 + r) ** n - 1) / r));
 
+    const numberFormat = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumSignificantDigits: 3,
+    });
+
     setError('');
     setResult(`
-      Your invested amount is ${principal * n}. Your Total return is ${sip}.
-      Est Return is ${sip - principal * n}`);
+      Your invested amount is ${numberFormat.format(
+        principal * n
+      )}. Your Total return is ${numberFormat.format(sip)}.
+      Estimated Return is ${numberFormat.format(sip - principal * n)}`);
   };
 
   return (
@@ -74,7 +82,7 @@ const SipCalculator: React.FC = () => {
         <TextField
           fullWidth
           defaultValue={values.timePeriod.toString()}
-          label={'Loan Tenure in Years'}
+          label={'Investment Period in Years'}
           onChange={handleChange}
           name={'timePeriod'}
           variant={'outlined'}

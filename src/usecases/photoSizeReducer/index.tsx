@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import {
+  Box,
   Button,
   FormControl,
+  InputAdornment,
   InputLabel,
+  LinearProgress,
   MenuItem,
   Select,
   Slider,
@@ -11,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import { DropzoneArea } from 'mui-file-dropzone';
+import imageCompression from 'browser-image-compression';
 import { saveAs } from 'file-saver';
 
 type ResizeOutput = 'JPEG' | 'PNG' | 'JPG' | '';
@@ -18,31 +22,25 @@ type ResizeOutput = 'JPEG' | 'PNG' | 'JPG' | '';
 const PhotoSizeReducer: React.FC = () => {
   const [files, setFiles] = React.useState<File[]>([]);
   const [error, setError] = React.useState('');
-  const [quality, setQuality] = useState<number>(90);
+  const [maxSize, setMaxSize] = useState<number>(0);
+  const [loading, setLoading] = useState<number | null>(null);
   const [outputFormat, setOutputFormat] = useState<ResizeOutput>('');
+  const [sizeType, setSizeType] = useState<'KB' | 'MB'>('MB');
 
   const handleDrop = (files: File[]) => {
     setFiles(files);
-  };
-
-  const getImageFromUrl = (url: string): Promise<HTMLImageElement> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.onload = () => {
-        resolve(img);
-      };
-      img.onerror = (err) => {
-        reject(err);
-      };
-      img.src = url;
-    });
+    const [file] = files;
+    if (file) {
+      const fileSize = file.size / 1024;
+      setMaxSize(Math.round(fileSize));
+    }
   };
 
   const handleClick = async () => {
     // Resize image
 
     const [file] = files;
+    setError('');
     if (!file) {
       setError('Please select a file');
       return;
@@ -53,31 +51,31 @@ const PhotoSizeReducer: React.FC = () => {
       return;
     }
 
-    const img = await getImageFromUrl(URL.createObjectURL(file));
-
-    const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      setError('Could not get canvas context');
+    if (maxSize === 0) {
+      setError('Please provide maximum size');
       return;
     }
-    ctx.drawImage(img, 0, 0);
-    ctx.canvas.toBlob(
-      (blob) => {
-        if (!blob) {
-          setError('Could not resize image');
-          return;
-        }
-        saveAs(
-          blob,
-          `${file.name.split('.')[0]}.${outputFormat.toLowerCase()}`
-        );
+
+    console.log(maxSize / 1024);
+
+    setLoading(0);
+    imageCompression(file, {
+      maxSizeMB: maxSize / 1024 ? 1 : maxSize / 1024,
+      useWebWorker: true,
+      onProgress: (progress) => {
+        setLoading(progress);
       },
-      `image/${outputFormat.toLowerCase()}`,
-      quality / 100
-    );
+      fileType: `image/${outputFormat.toLowerCase()}`,
+    })
+      .then((compressedFile) => {
+        saveAs(compressedFile, `compressed.${outputFormat.toLowerCase()}`);
+        setLoading(null);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setError(err.message);
+        setLoading(null);
+      });
   };
 
   return (
@@ -86,26 +84,27 @@ const PhotoSizeReducer: React.FC = () => {
         acceptedFiles={['image/png', 'image/jpeg', 'image/jpg']}
         filesLimit={1}
         fileObjects={files}
-        dropzoneText="Drag and drop a image file here or click"
+        dropzoneText="Click to upload"
         onChange={handleDrop}
         showPreviewsInDropzone
         showFileNamesInPreview
         onDropRejected={() => {
-          alert('Only png files are accepted');
+          setError('Please select a valid image');
         }}
       />
       <Stack spacing={3} direction="row">
-        <Slider
-          aria-label="Picture Quality"
-          defaultValue={quality}
-          getAriaValueText={(value) => `${value}`}
-          valueLabelDisplay="auto"
-          step={10}
-          marks
-          min={10}
-          max={100}
-          onChange={(e, value) => setQuality(value as number)}
+        <TextField
+          label="Max Size"
+          onChange={(e) => setMaxSize(+e.target.value)}
+          value={maxSize}
+          helperText="Max Size"
+          type="number"
+          fullWidth
+          InputProps={{
+            endAdornment: <InputAdornment position="end">KB</InputAdornment>,
+          }}
         />
+
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Output Format</InputLabel>
           <Select
@@ -121,14 +120,28 @@ const PhotoSizeReducer: React.FC = () => {
           </Select>
         </FormControl>
       </Stack>
-      <Button variant="outlined" onClick={handleClick}>
-        Convert & Download Image
-      </Button>
+      {loading ? (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ width: '100%', mr: 1 }}>
+            <LinearProgress variant="determinate" value={loading} />
+          </Box>
+          <Box sx={{ minWidth: 35 }}>
+            <Typography variant="body2" color="text.secondary">{`${Math.round(
+              loading
+            )}%`}</Typography>
+          </Box>
+        </Box>
+      ) : (
+        <Button variant="outlined" onClick={handleClick}>
+          Reduce & Download Image
+        </Button>
+      )}
       {error.length !== 0 && (
         <Typography variant="h6" color="error">
           {error}
         </Typography>
       )}
+      {}
     </Stack>
   );
 };

@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { CopyAllOutlined } from '@mui/icons-material';
 
 type ResponseData = {
   ok: boolean;
@@ -39,7 +46,7 @@ const UrlShortner: React.FC = () => {
   return (
     <Stack spacing={3} mx={2} my={5}>
       <TextField
-        label="Enter text to generate short url"
+        label="Enter URL to Shorten"
         variant="outlined"
         value={value ?? ''}
         onChange={handleChange}
@@ -64,22 +71,13 @@ const UrlShortner: React.FC = () => {
             >
               {shortUrl.short_link}
             </a>
-          </Typography>
-          <br />
-          <Typography variant="body1">
-            <b>Short URL 2:</b>{' '}
-            <a
-              href={shortUrl.full_short_link2}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                textDecoration: 'none',
-                color: 'inherit',
-                cursor: 'pointer',
+            <IconButton
+              onClick={() => {
+                navigator.clipboard.writeText(shortUrl.short_link);
               }}
             >
-              {shortUrl.short_link2}
-            </a>
+              <CopyAllOutlined />
+            </IconButton>
           </Typography>
         </Stack>
       )}

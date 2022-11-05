@@ -55,3 +55,18 @@ export async function getUsecaseDataFromServer(
   const { data } = await response.json();
   return data;
 }
+
+export async function getUsecaseQuery(): Promise<string[]> {
+  try {
+    const response = await fetch(`${BASE_URL}/usecases/allqueries`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
