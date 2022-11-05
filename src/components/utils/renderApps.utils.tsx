@@ -26,6 +26,8 @@ import {
   HomeLoanCalculator,
   PhotoSizeReducer,
   ImageToText,
+  CgpaToPercentage,
+  AirPollution,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -84,5 +86,9 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <PhotoSizeReducer />;
     case AppName.IMAGE_TO_TEXT:
       return <ImageToText />;
+    case AppName.CGPA_TO_PERCENTAGE:
+      return <CgpaToPercentage />;
+    case AppName.AIR_POLLUTION:
+      return <AirPollution />;
   }
 };

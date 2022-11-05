@@ -24,6 +24,8 @@ import SipCalculator from './sipCalculator';
 import HomeLoanCalculator from './homeLoanCalculator';
 import PhotoSizeReducer from './photoSizeReducer';
 import ImageToText from './imageToText';
+import CgpaToPercentage from './cgpaToPercentage';
+import AirPollution from './airPollution';
 export {
   DumbCharades,
   AgeCalculator,
@@ -51,4 +53,6 @@ export {
   HomeLoanCalculator,
   PhotoSizeReducer,
   ImageToText,
+  CgpaToPercentage,
+  AirPollution,
 };
