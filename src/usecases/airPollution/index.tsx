@@ -91,27 +91,12 @@ const AirPollution: React.FC = () => {
           }}
         >
           {result}
-          <Box
-            component="span"
-            sx={{
-              display: 'block',
-              p: 1,
-              m: 1,
-              bgcolor: (theme) =>
-                theme.palette.mode === 'dark' ? colors[aqi] : colors[aqi],
-              color: (theme) =>
-                theme.palette.mode === 'dark' ? 'white' : 'white',
-              border: '1px solid',
-              borderColor: (theme) =>
-                theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-              borderRadius: 2,
-              fontSize: '0.875rem',
-              fontWeight: '700',
-              textAlign: 'center',
-            }}
-          >
-            {levels[aqi]}
-          </Box>
+          <br/>
+          <b>
+          {levels[aqi]}
+          </b>
+          
+       
         </Typography>
       )}
 
@@ -122,7 +107,7 @@ const AirPollution: React.FC = () => {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
-          //  style={{ color: theme.palette.error.main }}
+
         >
           {error}
         </Typography>

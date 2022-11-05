@@ -21,7 +21,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const TimezoneConverter: React.FC = () => {
-  const [givenTime, setgivenTime] = useState<Dayjs | null>(null);
+  const [givenTime, setgivenTime] = useState<Dayjs | null>(  dayjs());
   const [country1, setCountry1] = useState<string>();
   const [country2, setCountry2] = useState<string>();
   const [result, setResult] = useState<string>('');
@@ -78,6 +78,7 @@ const TimezoneConverter: React.FC = () => {
           <InputLabel id="country1-select-label">Country 1</InputLabel>
           <Select
             labelId="country1-select-label"
+            label="Country 1"
             id="country1-select"
             value={country1 || ''}
             placeholder={'Country 1'}
@@ -98,9 +99,9 @@ const TimezoneConverter: React.FC = () => {
           <InputLabel id="country2-select-label">Country 2</InputLabel>
           <Select
             labelId="country2-select-label"
+            label="Country 2"
             id="country2-select"
             value={country2 || ''}
-            label={country2}
             onChange={(e) => {
               setCountry2(e.target.value as string);
             }}
