@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Stack, TextField, Typography, Box } from '@mui/material';
+import {
+  Button,
+  Stack,
+  TextField,
+  Typography,
+  Box,
+  CircularProgress,
+} from '@mui/material';
 import { getUsecaseDataFromServer } from '../../utils/api.utils';
 type AirPollutionResponse = {
   city: string;
@@ -23,20 +30,24 @@ type AirPollutionResponse = {
 };
 const levels = [
   '',
-  'Clean Air',
-  'Moderately Polluted',
-  'Unhealthy for Sensitive Groups',
-  'Unhealthy',
-  'Very Unhealthy',
-  'Hazardous to Health',
+  'clean air',
+  'moderately polluted',
+  'unhealthy for sensitive groups',
+  'unhealthy',
+  'very unhealthy',
+  'hazardous to health',
 ];
 const colors = ['', 'green', 'yellow', 'orange', 'red', 'purple', 'mahroon'];
+
 const AirPollution: React.FC = () => {
   const [city, setCity] = useState<string>('');
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
-  const [aqi, setAqi] = useState(0);
+  const [loading, setLoading] = useState(false);
+
   const handleClick = async () => {
+    setLoading(true);
+    setResult('');
     const data = (await getUsecaseDataFromServer(13, {
       city,
     })) as AirPollutionResponse;
@@ -44,14 +55,17 @@ const AirPollution: React.FC = () => {
 
     if (data.error) {
       setError(data.error);
-      console.log(data.error);
       setResult('');
 
       return;
     }
-
-    setResult(`Air Quality Index of ${city} is ${data.airPollution?.main.aqi}`);
-    if (data.airPollution?.main.aqi) setAqi(data.airPollution?.main.aqi);
+    const { airPollution } = data;
+    setLoading(false);
+    setResult(
+      `Air Quality Index of ${city} is ${airPollution!.main.aqi} and it is ${
+        levels[airPollution!.main.aqi]
+      } for you.`
+    );
     setError('');
   };
 
@@ -64,9 +78,7 @@ const AirPollution: React.FC = () => {
           value={city}
           fullWidth
           onChange={(e) => {
-            // console.log("---",city);
             setCity(e.target.value);
-            //console.log(city);
           }}
           variant="outlined"
         />
@@ -80,7 +92,7 @@ const AirPollution: React.FC = () => {
         }}
         onClick={handleClick}
       >
-        Check
+        {loading ? <CircularProgress /> : 'Check Air Quality'}
       </Button>
       {result.length !== 0 && (
         <Typography
@@ -91,8 +103,6 @@ const AirPollution: React.FC = () => {
           }}
         >
           {result}
-          <br />
-          <b>{levels[aqi]}</b>
         </Typography>
       )}
 

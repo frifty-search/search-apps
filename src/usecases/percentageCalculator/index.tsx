@@ -1,4 +1,10 @@
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import React, { useState } from 'react';
 
 const PercentageCalculator: React.FC = () => {
@@ -52,6 +58,10 @@ const PercentageCalculator: React.FC = () => {
           value={percentage === -1 ? '' : percentage}
           disabled
           fullWidth
+          variant="standard"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">%</InputAdornment>,
+          }}
         />
       </Stack>
       <Button variant="contained" onClick={calculatePercentage}>

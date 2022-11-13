@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import {
+  Autocomplete,
   Button,
   Stack,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
   TextField,
   Typography,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
+  TableBody,
 } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -15,108 +17,221 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import timezones, { TimeZone } from 'timezone-abbreviations';
+import timezones from 'timezones-list';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const TimezoneConverter: React.FC = () => {
+export interface Timezone {
+  name: string;
+  alternativeName: string;
+  group: string[];
+  continentCode: string;
+  continentName: string;
+  countryName: string;
+  countryCode: string;
+  mainCities: string[];
+  rawOffsetInMinutes: number;
+  abbreviation: string;
+  rawFormat: string;
+}
+
+const TimezoneConverter: React.FC<{
+  data: {
+    timezones: {
+      [key: string]: Timezone;
+    };
+    timezoneLabels: {
+      [key: string]: string;
+    };
+  };
+}> = ({
+  data,
+}: {
+  data: {
+    timezones: {
+      [key: string]: Timezone;
+    };
+    timezoneLabels: {
+      [key: string]: string;
+    };
+  };
+}) => {
+  const { timezoneLabels } = data;
   const [givenTime, setgivenTime] = useState<Dayjs | null>(dayjs());
+  const [yourCountry, setYourCountry] = useState<string>();
   const [country1, setCountry1] = useState<string>();
   const [country2, setCountry2] = useState<string>();
-  const [result, setResult] = useState<string>('');
+  const [time1, setTime1] = useState<Dayjs | null>(null);
+  const [time2, setTime2] = useState<Dayjs | null>(null);
   const [error, setError] = useState<string>('');
 
-  const countryObject = timezones.reduce((acc, timezone) => {
-    if (timezone.names) {
-      acc[timezone.abbr] = timezone;
-    }
-    return acc;
-  }, {} as { [key: string]: TimeZone });
-  const countryArray = Object.keys(countryObject);
-  countryArray.push('');
-  countryArray.sort();
-
   const handleClick = () => {
-    if (!givenTime || !country1 || !country2) {
+    setTime1(null);
+    setTime2(null);
+    if (!givenTime || !yourCountry) {
       setError('Please fill all the fields');
       return;
     }
-    if (!(country1 in countryObject) || !(country2 in countryObject)) {
-      setError('Please select a valid country');
+    if (!country1 || !(country1 in timezoneLabels)) {
+      setError('Please select a country');
       return;
     }
-    const country1timezone = countryObject[country1].names![0];
-    const country2timezone = countryObject[country2].names![0];
-    const time1 = dayjs()
-      .tz(country1timezone)
+
+    const currentCountryTimeZone = timezoneLabels[yourCountry];
+    const givenTimeInCurrentCountry = dayjs()
+      .tz(currentCountryTimeZone)
       .set('hour', givenTime.hour())
       .set('minute', givenTime.minute());
-    const time2 = time1.tz(country2timezone);
+    if (country1) {
+      const country1timezone = timezoneLabels[country1];
+      const time1 = givenTimeInCurrentCountry.tz(country1timezone);
+      setTime1(time1);
+    }
+
+    if (country2 && country2 in timezoneLabels) {
+      const country2timezone = timezoneLabels[country2];
+      const time2 = givenTimeInCurrentCountry.tz(country2timezone);
+      setTime2(time2);
+    }
     setError('');
-    setResult(
-      `${time1.format('HH:mm A ddd')} in ${country1} is   ${time2.format(
-        'HH:mm A ddd'
-      )} in ${country2}`
-    );
   };
 
   return (
     <Stack spacing={1} mx={1} my={5}>
-      <Stack spacing={1} direction={'row'}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker
-            label="Select Time"
-            renderInput={(params) => <TextField {...params} fullWidth />}
-            value={givenTime}
-            onChange={(newValue) => {
-              setgivenTime(newValue);
-            }}
-          />
-        </LocalizationProvider>
-        <FormControl fullWidth>
-          <InputLabel id="country1-select-label">Country 1</InputLabel>
-          <Select
-            labelId="country1-select-label"
-            label="Country 1"
-            id="country1-select"
-            value={country1 || ''}
-            placeholder={'Country 1'}
-            onChange={(e) => {
-              setCountry1(e.target.value as string);
-            }}
-          >
-            {countryArray.map((name, index) => {
-              return (
-                <MenuItem value={name} key={`country1-${index}`}>
-                  {name}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="country2-select-label">Country 2</InputLabel>
-          <Select
-            labelId="country2-select-label"
-            label="Country 2"
-            id="country2-select"
-            value={country2 || ''}
-            onChange={(e) => {
-              setCountry2(e.target.value as string);
+      <Stack direction="row" spacing={1}>
+        <Stack spacing={1} direction={'column'}>
+          <Autocomplete
+            freeSolo
+            id="your-country"
+            disableClearable
+            options={Object.keys(timezoneLabels).map((v) => v)}
+            placeholder={'Your country'}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={'Your Country'}
+                InputProps={{
+                  ...params.InputProps,
+                  type: 'search',
+                }}
+                fullWidth
+              />
+            )}
+            onInputChange={(
+              _: React.SyntheticEvent,
+              value: string,
+              reason: string
+            ) => {
+              if (reason === 'reset') {
+                setYourCountry(value);
+              } else if (reason === 'input') {
+                setYourCountry(value);
+              }
             }}
             fullWidth
-          >
-            {countryArray.map((name, index) => {
-              return (
-                <MenuItem value={name} key={`country2-${index}`}>
-                  {name}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <TimePicker
+              label="Select Time"
+              renderInput={(params) => <TextField {...params} fullWidth />}
+              ampm
+              value={givenTime}
+              onChange={(newValue) => {
+                setgivenTime(newValue);
+              }}
+            />
+          </LocalizationProvider>
+        </Stack>
+        <Typography variant="h4" sx={{ alignSelf: 'center' }}>
+          =
+        </Typography>
+        <Stack spacing={1} direction={'column'}>
+          <Autocomplete
+            freeSolo
+            id="country-1"
+            disableClearable
+            options={Object.keys(timezoneLabels).map((v) => v)}
+            placeholder={'Country 1'}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={'Country 1'}
+                InputProps={{
+                  ...params.InputProps,
+                  type: 'search',
+                }}
+                fullWidth
+              />
+            )}
+            onInputChange={(
+              _: React.SyntheticEvent,
+              value: string,
+              reason: string
+            ) => {
+              if (reason === 'reset') {
+                setCountry1(value);
+              } else if (reason === 'input') {
+                setCountry1(value);
+              }
+            }}
+            fullWidth
+          />
+          <TextField
+            label="Time 1"
+            InputProps={{
+              readOnly: true,
+            }}
+            value={time1 == null ? '' : time1.format('HH:mm A dddd')}
+            disabled
+            fullWidth
+            variant="outlined"
+          />
+        </Stack>
+        <Stack spacing={1} direction={'column'}>
+          <Autocomplete
+            freeSolo
+            id="country-2"
+            disableClearable
+            options={Object.keys(timezoneLabels).map((v) => v)}
+            placeholder={'Country 2'}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={'Country 2'}
+                InputProps={{
+                  ...params.InputProps,
+                  type: 'search',
+                }}
+                fullWidth
+              />
+            )}
+            onInputChange={(
+              _: React.SyntheticEvent,
+              value: string,
+              reason: string
+            ) => {
+              if (reason === 'reset') {
+                setCountry2(value);
+              } else if (reason === 'input') {
+                setCountry2(value);
+              }
+            }}
+            fullWidth
+          />
+          <TextField
+            label="Time 2"
+            InputProps={{
+              readOnly: true,
+            }}
+            value={time2 == null ? '' : time2.format('HH:mm A dddd')}
+            disabled
+            fullWidth
+            variant="outlined"
+          />
+        </Stack>
       </Stack>
+
       <Button
         variant="contained"
         color="primary"
@@ -131,7 +246,6 @@ const TimezoneConverter: React.FC = () => {
           {error}
         </Typography>
       )}
-      {result.length !== 0 && <Typography variant="h6">{result}</Typography>}
     </Stack>
   );
 };

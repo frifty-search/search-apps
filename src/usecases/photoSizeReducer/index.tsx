@@ -60,7 +60,7 @@ const PhotoSizeReducer: React.FC = () => {
 
     setLoading(0);
     imageCompression(file, {
-      maxSizeMB: maxSize / 1024 ? 1 : maxSize / 1024,
+      maxSizeMB: maxSize / 1024,
       useWebWorker: true,
       onProgress: (progress) => {
         setLoading(progress);
@@ -94,10 +94,10 @@ const PhotoSizeReducer: React.FC = () => {
       />
       <Stack spacing={3} direction="row">
         <TextField
-          label="Max Size"
+          label="Size Limit *"
           onChange={(e) => setMaxSize(+e.target.value)}
           value={maxSize}
-          helperText="Max Size"
+          helperText="Maximum permissible size"
           type="number"
           fullWidth
           InputProps={{
@@ -133,9 +133,14 @@ const PhotoSizeReducer: React.FC = () => {
         </Box>
       ) : (
         <Button variant="outlined" onClick={handleClick}>
-          Reduce & Download Image
+          Compress & Download Image
         </Button>
       )}
+      <Typography variant="subtitle2">
+        *In case an image can't be compressed below the size limit, we will
+        compress it to the smallest size possible.
+      </Typography>
+
       {error.length !== 0 && (
         <Typography variant="h6" color="error">
           {error}

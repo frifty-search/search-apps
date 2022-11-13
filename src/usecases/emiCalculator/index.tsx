@@ -94,8 +94,16 @@ const EmiCalculator: React.FC<{}> = () => {
 
     const emi = Math.round((principal * r * (1 + r) ** n) / ((1 + r) ** n - 1));
 
+    const numberFormat = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+    });
     setError('');
-    setResult(`You have to pay ${n} installment(s), each worth ${emi}.`);
+    setResult(
+      `You have to pay ${n} installment(s), each worth ${numberFormat.format(
+        emi
+      )}.`
+    );
   };
 
   return (

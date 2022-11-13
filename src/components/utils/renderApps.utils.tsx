@@ -56,7 +56,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
     case AppName.HOROSCOPE:
       return <Horoscope />;
     case AppName.TIMEZONECONVERTER:
-      return <TimezoneConverter />;
+      return <TimezoneConverter data={data} />;
     case AppName.UNSPLASH:
       return <Unsplash />;
     case AppName.BARCODEGENERATOR:

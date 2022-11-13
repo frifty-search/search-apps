@@ -56,7 +56,12 @@ const UrlShortner: React.FC = () => {
         Generate Short URL
       </Button>
       {shortUrl && (
-        <Stack sx={{ display: 'flex', alignItems: 'left', textAlign: 'left' }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="stretch"
+          justifyContent="space-between"
+        >
           <Typography variant="body1">
             <b>Short URL:</b>{' '}
             <a
@@ -71,14 +76,19 @@ const UrlShortner: React.FC = () => {
             >
               {shortUrl.short_link}
             </a>
-            <IconButton
-              onClick={() => {
-                navigator.clipboard.writeText(shortUrl.short_link);
-              }}
-            >
-              <CopyAllOutlined />
-            </IconButton>
           </Typography>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(shortUrl.short_link);
+            }}
+            variant="outlined"
+            size="small"
+            sx={{
+              alignSelf: 'right',
+            }}
+          >
+            Copy to Clipboard
+          </Button>
         </Stack>
       )}
     </Stack>

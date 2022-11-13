@@ -166,7 +166,7 @@ const ImageToText: React.FC = () => {
         acceptedFiles={['image/png', 'image/jpeg', 'image/jpg']}
         filesLimit={1}
         fileObjects={files}
-        dropzoneText="Drag and drop a image file here or click"
+        dropzoneText="Click to upload"
         onChange={handleDrop}
         showPreviewsInDropzone
         showFileNamesInPreview
@@ -174,24 +174,7 @@ const ImageToText: React.FC = () => {
           alert('Only png files are accepted');
         }}
       />
-      <Stack spacing={3} direction="row">
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Language</InputLabel>
-          <Select
-            labelId={'demo-simple-select-label'}
-            id={'demo-simple-select'}
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            label={'Language'}
-          >
-            {Object.keys(languageOptions).map((key) => (
-              <MenuItem key={key} value={key}>
-                {key}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Stack>
+
       <Button variant="outlined" onClick={handleClick}>
         Convert to Text
       </Button>

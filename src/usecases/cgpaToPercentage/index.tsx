@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 const CgpaToPercentage: React.FC = () => {
   const [cgpa, setCgpa] = useState<string>('0');
-  const [percentage, setPercentage] = useState<string>('0');
-  const [result, setResult] = useState('');
+  const [percentage, setPercentage] = useState<number | null>(null);
   const [error, setError] = useState('');
   const handleClick = () => {
-    if (cgpa === '0') {
+    if (cgpa === '0' || cgpa === '') {
       setError('Enter a valid CGPA');
+      setPercentage(null);
       return;
     }
-    var current_cg = parseFloat(cgpa);
-    var percent = current_cg * 9.5;
-    setPercentage(percentage);
+    const current_cg = parseFloat(cgpa);
+    const percentage = current_cg * 9.5;
+    setPercentage(Math.round((percentage + Number.EPSILON) * 100) / 100);
     setError('');
-    setResult(`${current_cg} CGPA will be ${percent.toFixed(2)} %`);
     return;
   };
   return (
@@ -23,13 +28,26 @@ const CgpaToPercentage: React.FC = () => {
       <Stack spacing={3} direction={'row'}>
         <TextField
           id="cgpa"
-          label="CGPA"
+          label="Class X CGPA"
           value={cgpa}
           fullWidth
           onChange={(e) => {
             setCgpa(e.target.value);
           }}
           variant="outlined"
+        />
+        <Typography variant="h3">=</Typography>
+
+        <TextField
+          label="Percentage"
+          type="number"
+          value={percentage ? percentage : ''}
+          disabled
+          fullWidth
+          variant="standard"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">%</InputAdornment>,
+          }}
         />
       </Stack>
       <Button
@@ -43,18 +61,6 @@ const CgpaToPercentage: React.FC = () => {
       >
         Calculate
       </Button>
-
-      {result.length !== 0 && (
-        <Typography
-          variant="h6"
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {result}
-        </Typography>
-      )}
 
       {error.length !== 0 && (
         <Typography

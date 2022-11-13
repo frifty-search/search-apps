@@ -52,8 +52,8 @@ const SipCalculator: React.FC = () => {
     setResult(`
       Your invested amount is ${numberFormat.format(
         principal * n
-      )}. Your Total return is ${numberFormat.format(sip)}.
-      Estimated Return is ${numberFormat.format(sip - principal * n)}`);
+      )}. Your total return is ${numberFormat.format(sip)}.
+      You earn ${numberFormat.format(sip - principal * n)} in interest`);
   };
 
   return (

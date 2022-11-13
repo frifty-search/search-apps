@@ -1,22 +1,48 @@
-import { Search } from '@mui/icons-material';
+import { Download, Search } from '@mui/icons-material';
 import {
-  Box,
   CircularProgress,
-  FormControl,
   IconButton,
   ImageList,
   ImageListItem,
+  ImageListItemBar,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import saveAs from 'file-saver';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Controlled as ControlledZoom } from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 import { getUsecaseDataFromServer } from '../../utils/api.utils';
 
 type UnsplashedImage = {
   url: string;
   downloadLink: string;
   user: string;
+};
+
+const ZoomUnsplashImageComponent = ({
+  url,
+  downloadLink,
+  user,
+}: UnsplashedImage) => {
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  const handleZoomChange = useCallback((shouldZoom: boolean) => {
+    setIsZoomed(shouldZoom);
+  }, []);
+
+  return (
+    <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
+      <img
+        src={
+          isZoomed ? downloadLink : `${url}?w=164&h=164&fit=crop&auto=format`
+        }
+        alt={user}
+        loading="lazy"
+      />
+    </ControlledZoom>
+  );
 };
 
 const Unsplash: React.FC = () => {
@@ -84,16 +110,26 @@ const Unsplash: React.FC = () => {
           rowHeight={164}
         >
           {unsplashedImage.map((item) => (
-            <ImageListItem
-              key={item.url}
-              onClick={() => window.open(item.downloadLink, '_blank')}
-              sx={{ cursor: 'pointer' }}
-            >
-              <img
-                src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.user}
-                loading="lazy"
+            <ImageListItem key={item.url}>
+              <ZoomUnsplashImageComponent
+                url={item.url}
+                downloadLink={item.downloadLink}
+                user={item.user}
+              />
+              <ImageListItemBar
+                actionIcon={
+                  <IconButton
+                    color="primary"
+                    onClick={() => {
+                      saveAs(
+                        item.downloadLink,
+                        `${item.user}-${new Date().getTime()}.jpg`
+                      );
+                    }}
+                  >
+                    <Download />
+                  </IconButton>
+                }
               />
             </ImageListItem>
           ))}
