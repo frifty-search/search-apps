@@ -1,12 +1,13 @@
 import { Search } from '@mui/icons-material';
-import { IconButton, TextField } from '@mui/material';
+import { Autocomplete, IconButton, TextField } from '@mui/material';
 import React, { ChangeEventHandler } from 'react';
 
 type SearchBoxProps = {
   handleSumbit: (e: React.FormEvent) => void;
-  onChange: ChangeEventHandler;
+  onChange: (e: React.SyntheticEvent, value: string, reason: string) => void;
   label: string;
   placeholder: string;
+  options: string[];
 };
 
 export const SearchBox: React.FC<SearchBoxProps> = ({
@@ -14,6 +15,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
   onChange,
   label,
   placeholder,
+  options,
 }) => {
   return (
     <form
@@ -23,15 +25,28 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        width: '50%',
       }}
     >
-      <TextField
-        id="search-bar"
-        className="text"
-        onChange={onChange}
-        label={label}
-        variant="outlined"
+      <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        options={options}
         placeholder={placeholder}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            InputProps={{
+              ...params.InputProps,
+              type: 'search',
+            }}
+            fullWidth
+          />
+        )}
+        onInputChange={onChange}
+        fullWidth
       />
       <IconButton type="submit" aria-label="search">
         <Search style={{ fill: 'blue' }} />

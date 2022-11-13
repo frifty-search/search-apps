@@ -20,6 +20,15 @@ import {
   ImageToPdf,
   PhotoResizer,
   CompoundInterestCalculator,
+  KrutidevToUnicode,
+  Finshots,
+  SipCalculator,
+  HomeLoanCalculator,
+  PhotoSizeReducer,
+  ImageToText,
+  CgpaToPercentage,
+  AirPollution,
+  AnandBazaarPatrika,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -47,7 +56,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
     case AppName.HOROSCOPE:
       return <Horoscope />;
     case AppName.TIMEZONECONVERTER:
-      return <TimezoneConverter />;
+      return <TimezoneConverter data={data} />;
     case AppName.UNSPLASH:
       return <Unsplash />;
     case AppName.BARCODEGENERATOR:
@@ -66,5 +75,23 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <PhotoResizer />;
     case AppName.COMPOUND_INTEREST_CALCULATOR:
       return <CompoundInterestCalculator />;
+    case AppName.KRUTIDEV_TO_UNICODE:
+      return <KrutidevToUnicode />;
+    case AppName.FINSHOTS:
+      return <Finshots />;
+    case AppName.SIP_CALCULATOR:
+      return <SipCalculator />;
+    case AppName.HOME_LOAN_CALCULATOR:
+      return <HomeLoanCalculator />;
+    case AppName.PHOTO_SIZE_REDUCER:
+      return <PhotoSizeReducer />;
+    case AppName.IMAGE_TO_TEXT:
+      return <ImageToText />;
+    case AppName.CGPA_TO_PERCENTAGE:
+      return <CgpaToPercentage />;
+    case AppName.AIR_POLLUTION:
+      return <AirPollution />;
+    case AppName.ANAND_BAZAAR_PATRIKA:
+      return <AnandBazaarPatrika />;
   }
 };

@@ -1,41 +1,10 @@
+import { Button, Stack, TextField, Typography } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
 
-const EmiCalculator: React.FC<{}> = () => {
-  const options = [
-    {
-      value: '12',
-      label: 'Monthly',
-    },
-    {
-      value: '4',
-      label: 'Quaterly',
-    },
-    {
-      value: '2',
-      label: 'Half Yearly',
-    },
-    {
-      value: '1',
-      label: 'Annually',
-    },
-  ];
-
+const HomeLoanCalculator: React.FC = () => {
   const [values, setValues] = useState({
     principal: 0,
     interestRate: 0,
-    paymentFrequency: parseFloat(options[0].value),
     timePeriod: 0,
   });
 
@@ -49,26 +18,10 @@ const EmiCalculator: React.FC<{}> = () => {
     });
   };
 
-  const handleFrequencyPayment = (e: SelectChangeEvent) => {
-    setValues({
-      ...values,
-      paymentFrequency: parseFloat(e.target.value),
-    });
-  };
-
-  const theme = useTheme();
-
   const handleClick = () => {
-    const { principal, timePeriod, interestRate, paymentFrequency } = values;
-    if (
-      principal === 0 &&
-      timePeriod === 0 &&
-      interestRate === 0 &&
-      paymentFrequency === 0
-    ) {
-      setError(
-        `Principal Amount, Loan Tenure, Payment Frequency and Interest Rate cannot be 0.`
-      );
+    const { principal, timePeriod, interestRate } = values;
+    if (principal === 0 && timePeriod === 0 && interestRate === 0) {
+      setError(`Principal Amount, Loan Tenure and Interest Rate cannot be 0.`);
       return;
     }
     if (principal === 0) {
@@ -84,26 +37,26 @@ const EmiCalculator: React.FC<{}> = () => {
       return;
     }
 
-    if (paymentFrequency === 0) {
-      setError(`Payment Frequency cannot be 0.`);
-      return;
-    }
+    const n = timePeriod * 12;
+    const r = interestRate / (12 * 100);
 
-    const n = timePeriod * paymentFrequency;
-    const r = interestRate / (paymentFrequency * 100);
-
-    const emi = Math.round((principal * r * (1 + r) ** n) / ((1 + r) ** n - 1));
+    const emi = principal * r * ((1 + r) ** n / ((1 + r) ** n - 1));
 
     const numberFormat = new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
+      maximumSignificantDigits: 3,
     });
+
     setError('');
     setResult(
-      `You have to pay ${n} installment(s), each worth ${numberFormat.format(
-        emi
-      )}.`
+      `Your total payable amount is ${numberFormat.format(Math.round(emi * n))}.
+      Your EMI is ${numberFormat.format(emi)} for ${n} months.
+      Total interest payable is ${numberFormat.format(
+        Math.round(emi * n - principal)
+      )}`
     );
+    return;
   };
 
   return (
@@ -111,8 +64,8 @@ const EmiCalculator: React.FC<{}> = () => {
       <Stack direction="row" spacing={3}>
         <TextField
           fullWidth
-          value={values.principal.toString()}
-          label={'Principal/Loan Amount'}
+          defaultValue={values.principal.toString()}
+          label={'Loan Amount '}
           onChange={handleChange}
           name={'principal'}
           variant={'outlined'}
@@ -128,26 +81,6 @@ const EmiCalculator: React.FC<{}> = () => {
           variant={'outlined'}
           required
         />
-      </Stack>
-      <Stack direction="row" spacing={3}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">
-            Payment Frequency
-          </InputLabel>
-          <Select
-            labelId={'demo-simple-select-label'}
-            id={'demo-simple-select'}
-            value={values.paymentFrequency.toString()}
-            onChange={handleFrequencyPayment}
-            label={'Payment Frequency'}
-          >
-            {options.map((option) => (
-              <MenuItem value={option.value} key={option.label}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
 
         <TextField
           fullWidth
@@ -174,6 +107,7 @@ const EmiCalculator: React.FC<{}> = () => {
           sx={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            textAlign: 'left',
           }}
         >
           {result}
@@ -187,7 +121,7 @@ const EmiCalculator: React.FC<{}> = () => {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
-          style={{ color: theme.palette.error.main }}
+          color="error"
         >
           {error}
         </Typography>
@@ -196,4 +130,4 @@ const EmiCalculator: React.FC<{}> = () => {
   );
 };
 
-export default EmiCalculator;
+export default HomeLoanCalculator;

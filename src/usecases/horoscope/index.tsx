@@ -43,7 +43,7 @@ const Horoscope: React.FC<{}> = () => {
       setData(data as { [key: string]: string });
       setResult(data[selectedoptions]);
     });
-  });
+  }, []);
 
   const handleZodiacSign = (e: SelectChangeEvent) => {
     setSelectedoptions(e.target.value as string);

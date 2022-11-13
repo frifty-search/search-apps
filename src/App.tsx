@@ -1,8 +1,8 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
 import { Main } from './components/main/main.components';
-import { Apps, fetchSearchAPI } from './utils/api.utils';
+import { Apps, fetchSearchAPI, getUsecaseQuery } from './utils/api.utils';
 import { SearchBox } from './components/searchBox/searchBox.components';
 
 type AppState = 'start' | 'loading' | 'loaded' | 'error';
@@ -12,9 +12,14 @@ const App: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<Apps | null>(null);
   const [state, setState] = useState<AppState>('start');
+  const [options, setOptions] = useState<string[] | null>(null);
 
   const handleSumbit = (e: FormEvent) => {
     e.preventDefault();
+    if (searchQuery === '') {
+      setError(new Error('Search query cannot be empty'));
+      return;
+    }
 
     setState('loading');
     fetchSearchAPI(searchQuery)
@@ -28,11 +33,29 @@ const App: React.FC = () => {
       });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
+  useEffect(() => {
+    getUsecaseQuery()
+      .then((queries) => {
+        setOptions(queries);
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  }, []);
+
+  const handleChange = (
+    _: React.SyntheticEvent,
+    value: string,
+    reason: string
+  ) => {
+    if (reason === 'reset') {
+      setSearchQuery(value);
+    } else if (reason === 'input') {
+      setSearchQuery(value);
+    }
   };
 
-  return (
+  return !options ? null : (
     <Box
       sx={{
         m: 5,
@@ -45,6 +68,7 @@ const App: React.FC = () => {
     >
       <SearchBox
         handleSumbit={handleSumbit}
+        options={options}
         onChange={handleChange}
         placeholder="Search..."
         label="Enter the Query"

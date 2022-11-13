@@ -43,7 +43,7 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
       }}
     >
       This App is <br />
-      developer by:{'  '}
+      created by:{'  '}
       {developer.map((dev, index) => (
         <a
           key={`developer-${index}`}
@@ -61,7 +61,7 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
         </a>
       ))}
       <br />
-      maintainer by:{'  '}
+      contributors :{'  '}
       {maintainer.map((maint, index) => (
         <a
           key={`maintainer-${index}`}

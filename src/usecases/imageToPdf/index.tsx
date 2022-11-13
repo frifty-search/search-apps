@@ -69,36 +69,50 @@ const ImageToPdf: React.FC = () => {
       ) => a.index - b.index
     );
 
-    const doc = new jsPDF('p', 'pt', 'a4');
+    let maxWidth = 1,
+      maxHeight = 1;
 
-    const { height } = doc.internal.pageSize;
-    const { width } = doc.internal.pageSize;
+    images.forEach((image) => {
+      if (image.img.width > maxWidth) {
+        maxWidth = image.img.width;
+      }
+      if (image.img.height > maxHeight) {
+        maxHeight = image.img.height;
+      }
+    });
+
+    const orientation = maxWidth > maxHeight ? 'l' : 'p';
+
+    const doc = new jsPDF(orientation, 'mm', 'a4', true);
+
+    const max =
+      orientation === 'p'
+        ? { height: 300, width: 210 }
+        : {
+            height: 210,
+            width: 300,
+          };
 
     images.forEach(({ img, index }) => {
-      const ratio =
-        img.width > img.height
-          ? Math.min(width / img.width, height / img.height)
-          : Math.max(width / img.width, height / img.height);
+      let height = img.height,
+        width = img.width,
+        src = img.src,
+        ratio = img.height / img.width;
+      if (height > max.height || width > max.width) {
+        if (height > width) {
+          height = max.height - 10;
+          width = height * (1 / ratio);
+        } else if (width > height) {
+          width = max.width - 10;
+          height = width * ratio;
+        }
+      }
+      const mX = (max.width - width) / 2;
+      const mY = (max.height - height) / 2;
+      doc.addImage(src, 'png', mX, mY, width, height);
 
-      const newWidth = width * ratio;
-      const newHeight = height * ratio;
-
-      const x = (width - newWidth) / 2;
-      const y = (height - newHeight) / 2;
-
-      console.log({
-        width,
-        height,
-        imgWidth: img.width,
-        imgHeight: img.height,
-        x,
-        y,
-      });
-
-      doc.addImage(img, 'JPEG', x, y, newWidth, newHeight);
-
-      if (index < files.length - 1) {
-        doc.addPage();
+      if (index < images.length - 1) {
+        doc.addPage(orientation);
       }
     });
 
@@ -113,7 +127,7 @@ const ImageToPdf: React.FC = () => {
         acceptedFiles={['image/png', 'image/jpeg', 'image/jpg']}
         filesLimit={10}
         fileObjects={files}
-        dropzoneText="Drag and drop an image file here or click"
+        dropzoneText="Click to upload (max 10 images) - Upload in the same order as you need in the pdf"
         onChange={handleDrop}
         showPreviewsInDropzone
         onDropRejected={() => {

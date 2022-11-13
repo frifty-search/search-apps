@@ -4,7 +4,7 @@
   "version": "0.3.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "usecase:install": "cd usecase && npm install",
@@ -21,6 +21,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.1",
     "@mui/x-date-pickers": "^5.0.0",
+    "browser-image-compression": "^2.0.0",
     "copy-image-clipboard": "^2.1.2",
     "dayjs": "^1.11.5",
     "dayjs-plugin-utc": "^0.1.2",
@@ -29,7 +30,10 @@
     "mui-file-dropzone": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "timezone-abbreviations": "^1.2.6"
+    "react-medium-image-zoom": "^5.1.2",
+    "tesseract.js": "^3.0.3",
+    "timezone-abbreviations": "^1.2.6",
+    "timezones-list": "^3.0.1"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
