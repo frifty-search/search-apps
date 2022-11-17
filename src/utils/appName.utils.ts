@@ -28,4 +28,5 @@ export const AppName = {
   IMAGE_TO_TEXT: 35,
   ANAND_BAZAAR_PATRIKA: 36,
   FINSHOTS: 38,
+  YOUTUBEDOWNLOAD: 20,
 };

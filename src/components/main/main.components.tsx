@@ -31,10 +31,16 @@ type CreditsProps = {
       url: string;
     }
   ];
+  source: [
+    {
+      name: string;
+      url: string;
+    }
+  ];
 };
 
 const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
-  const { developer, maintainer } = credits;
+  const { developer, maintainer, source } = credits;
   return (
     <Typography
       style={{
@@ -42,8 +48,7 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
         marginBottom: 1,
       }}
     >
-      This App is <br />
-      created by:{'  '}
+      Developer - {'  '}
       {developer.map((dev, index) => (
         <a
           key={`developer-${index}`}
@@ -51,7 +56,7 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
           target="_blank"
           rel="noreferrer"
           style={{
-            textDecoration: 'none',
+            textDecoration: 'underline',
             color: 'inherit',
             cursor: 'pointer',
           }}
@@ -60,24 +65,44 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
           {index !== developer.length - 1 && ', '}
         </a>
       ))}
-      <br />
-      contributors :{'  '}
-      {maintainer.map((maint, index) => (
-        <a
-          key={`maintainer-${index}`}
-          href={maint.url}
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            textDecoration: 'none',
-            color: 'inherit',
-            cursor: 'pointer',
-          }}
-        >
-          {maint.name}
-          {index !== maintainer.length - 1 && ', '}
-        </a>
-      ))}
+      {maintainer.length > 0 && <br />}
+      {maintainer.length > 0 && `Contributors -`}
+      {maintainer.length > 0 &&
+        maintainer.map((maint, index) => (
+          <a
+            key={`maintainer-${index}`}
+            href={maint.url}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              textDecoration: 'underline',
+              color: 'inherit',
+              cursor: 'pointer',
+            }}
+          >
+            {maint.name}
+            {index !== maintainer.length - 1 && ', '}
+          </a>
+        ))}
+      {source.length > 0 && <br />}
+      {source.length > 0 && `Sources -`}
+      {source.length > 0 &&
+        source.map((sour, index) => (
+          <a
+            key={`source-${index}`}
+            href={sour.url}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              textDecoration: 'underline',
+              color: 'inherit',
+              cursor: 'pointer',
+            }}
+          >
+            {sour.name}
+            {index !== source.length - 1 && ', '}
+          </a>
+        ))}
     </Typography>
   );
 };

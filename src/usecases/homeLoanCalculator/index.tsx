@@ -45,7 +45,6 @@ const HomeLoanCalculator: React.FC = () => {
     const numberFormat = new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
-      maximumSignificantDigits: 3,
     });
 
     setError('');

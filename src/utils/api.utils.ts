@@ -19,6 +19,12 @@ export type Apps = {
         url: string;
       }
     ];
+    source: [
+      {
+        name: string;
+        url: string;
+      }
+    ];
   };
 };
 

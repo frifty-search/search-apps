@@ -37,7 +37,6 @@ const levels = [
   'very unhealthy',
   'hazardous to health',
 ];
-const colors = ['', 'green', 'yellow', 'orange', 'red', 'purple', 'mahroon'];
 
 const AirPollution: React.FC = () => {
   const [city, setCity] = useState<string>('');
@@ -62,9 +61,10 @@ const AirPollution: React.FC = () => {
     const { airPollution } = data;
     setLoading(false);
     setResult(
-      `Air Quality Index of ${city} is ${airPollution!.main.aqi} and it is ${
-        levels[airPollution!.main.aqi]
-      } for you.`
+      `PM10 score = ${airPollution?.components.pm10}. 
+      ` +
+        '\n' +
+        `This is categorized as  ${levels[airPollution!.main.aqi]} for you.`
     );
     setError('');
   };

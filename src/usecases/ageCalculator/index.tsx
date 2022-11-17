@@ -45,8 +45,7 @@ const AgeCalculator: React.FC = () => {
     }
 
     const endDay = dayjs().startOf('day');
-    console.log(endDay.format('YYYY-MM-DD HH:mm:ss'));
-    let year = endDay.diff(date, 'year');
+    let year = endDay.year() - date.year();
     let month = 0;
     let day = 0;
     if (endDay.month() < date.month()) {
