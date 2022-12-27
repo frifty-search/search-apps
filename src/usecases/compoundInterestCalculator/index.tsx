@@ -99,7 +99,7 @@ const CompoundInterestCalculator: React.FC = () => {
     console.log(amount);
     setResult(
       `At the end of ${timePeriod} years,
-      the principal would have become ${numberFormat.format(
+      the amount would have become ${numberFormat.format(
         amount
       )}. The interest amount would be ${numberFormat.format(
         amount - principal
@@ -112,7 +112,7 @@ const CompoundInterestCalculator: React.FC = () => {
       <Stack direction="row" spacing={3}>
         <TextField
           fullWidth
-          value={values.principal.toString()}
+          defaultValue={values.principal.toString()}
           label={'Principal Amount'}
           onChange={handleChange}
           name={'principal'}

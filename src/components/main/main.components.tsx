@@ -85,7 +85,7 @@ const Credits: React.FC<CreditsProps> = (credits: CreditsProps) => {
           </a>
         ))}
       {source.length > 0 && <br />}
-      {source.length > 0 && `Sources -`}
+      {source.length > 0 && `Sources - `}
       {source.length > 0 &&
         source.map((sour, index) => (
           <a
@@ -141,24 +141,9 @@ export const Main: React.FC<MainProps> = ({ data }) => {
         <Typography sx={{ fontStyle: 'italic' }}>Powered by Frifty</Typography>
       </Divider>
       {open ? (
-        <>
-          <Box
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-            }}
-          >
-            <IconButton
-              onClick={() => setOpen(false)}
-              sx={{ color: 'text.secondary' }}
-            >
-              <Close />
-            </IconButton>
-          </Box>
-          <Box paddingLeft={4}>
-            <Credits {...data.credits} />
-          </Box>
-        </>
+        <Box paddingLeft={4}>
+          <Credits {...data.credits} />
+        </Box>
       ) : (
         <></>
       )}
@@ -241,22 +226,41 @@ export const Main: React.FC<MainProps> = ({ data }) => {
           </Box>
         </Grid>
         <Grid item>
-          <Box
-            paddingRight={3}
-            p={1}
-            onClick={() => setOpen(true)}
-            style={{
-              cursor: 'pointer',
-            }}
-          >
-            <Typography
-              variant="subtitle1"
-              sx={{ textDecoration: 'underline' }}
-              display="inline"
+          {!open ? (
+            <Box
+              paddingRight={3}
+              p={1}
+              onClick={() => setOpen(true)}
+              style={{
+                cursor: 'pointer',
+              }}
             >
-              Credits{' '}
-            </Typography>
-          </Box>
+              <Typography
+                variant="subtitle1"
+                sx={{ textDecoration: 'underline' }}
+                display="inline"
+              >
+                View Credits{' '}
+              </Typography>
+            </Box>
+          ) : (
+            <Box
+              paddingRight={3}
+              p={1}
+              onClick={() => setOpen(false)}
+              style={{
+                cursor: 'pointer',
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                sx={{ textDecoration: 'underline' }}
+                display="inline"
+              >
+                Hide Credits{' '}
+              </Typography>
+            </Box>
+          )}
         </Grid>
       </Grid>
     </Box>

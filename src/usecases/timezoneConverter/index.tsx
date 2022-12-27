@@ -117,6 +117,9 @@ const TimezoneConverter: React.FC<{
   return (
     <Stack spacing={2} mx={2} my={5}>
       <Stack spacing={2} direction={'column'}>
+        <Typography variant={'h6'} sx={{ fontWeight: 'bold' }}>
+          Convert From
+        </Typography>
         <Autocomplete
           freeSolo
           id="your-country"
@@ -159,10 +162,11 @@ const TimezoneConverter: React.FC<{
           />
         </LocalizationProvider>
       </Stack>
-      <Typography variant="h4" sx={{ alignSelf: 'center', marginTop: '0' }}>
-        =
-      </Typography>
+
       <Stack spacing={2} direction={'column'}>
+        <Typography variant={'h6'} sx={{ fontWeight: 'bold' }}>
+          Convert To
+        </Typography>
         <Autocomplete
           freeSolo
           id="country-1"

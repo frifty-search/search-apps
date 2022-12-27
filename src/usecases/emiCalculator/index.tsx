@@ -79,10 +79,10 @@ const EmiCalculator: React.FC<{}> = () => {
       setError(`Loan Tenure cannot be 0.`);
       return;
     }
-    if (interestRate === 0) {
-      setError(`Interest Rate cannot be 0.`);
-      return;
-    }
+    // if (interestRate === 0) {
+    //   setError(`Interest Rate cannot be 0.`);
+    //   return;
+    // }
 
     if (paymentFrequency === 0) {
       setError(`Payment Frequency cannot be 0.`);
@@ -92,7 +92,12 @@ const EmiCalculator: React.FC<{}> = () => {
     const n = timePeriod * paymentFrequency;
     const r = interestRate / (paymentFrequency * 100);
 
-    const emi = Math.round((principal * r * (1 + r) ** n) / ((1 + r) ** n - 1));
+    let emi;
+    if (r === 0) {
+      emi = principal / n;
+    } else {
+      emi = (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    }
 
     const numberFormat = new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -111,12 +116,13 @@ const EmiCalculator: React.FC<{}> = () => {
       <Stack direction="row" spacing={3}>
         <TextField
           fullWidth
-          value={values.principal.toString()}
+          defaultValue={values.principal.toString()}
           label={'Principal/Loan Amount'}
           onChange={handleChange}
           name={'principal'}
           variant={'outlined'}
           required
+          focused
         />
 
         <TextField
