@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { getUsecaseDataFromServer } from '../../utils/api.utils';
 import { saveAs } from 'file-saver';
+
 interface VideoFormat {
   itag: number;
   url: string;
@@ -71,6 +72,7 @@ const YoutubeDownload: React.FC = () => {
 
   const handleClick = async () => {
     try {
+      setVideoInfo(null);
       const regexYTShare = /https\:\/\/youtu\.be\/[\s\S]+/gm;
       const regexYTWatch = /https\:\/\/www\.youtube\.com\/watch\?v\=[\s\S]+/gm;
 
@@ -96,31 +98,15 @@ const YoutubeDownload: React.FC = () => {
   const handleDownload = async (item: VideoFormat) => {
     try {
       setError(null);
-      if (item.hasAudio && item.container == 'mp4') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', item.url, true);
-        xhr.responseType = 'blob';
-        xhr.onload = function () {
-          let urlCreator = window.URL || window.webkitURL;
-          let videoUrl = urlCreator.createObjectURL(this.response);
-          let tag = document.createElement('a');
-          tag.href = videoUrl;
-          tag.target = '_blank';
-          tag.download = `${videoInfo?.title}.mp3`;
-          document.body.appendChild(tag);
-          tag.click();
-          document.body.removeChild(tag);
-        };
-        xhr.onerror = (err) => {};
-        xhr.send();
+      if (item.hasAudio && item.container == 'mp4' && !item.qualityLabel) {
+        const url = item.url;
+        const filename = `${videoInfo?.title}.mp3`;
+        saveAs(url, filename);
         return;
       }
       const url = item.url;
       const filename = `${videoInfo?.title}.${item.container}`;
-      const response = await fetch(url);
-      const blob = await response.blob();
-      saveAs(blob, filename);
-
+      saveAs(url, filename);
       return;
     } catch (error) {
       const errorValue = error as Error;
@@ -139,7 +125,7 @@ const YoutubeDownload: React.FC = () => {
         fullWidth
       />
       <Button variant="outlined" onClick={handleClick}>
-        Fetch Data
+        Download
       </Button>
       {videoInfo && (
         <Stack spacing={3} direction="row">
@@ -170,7 +156,9 @@ const YoutubeDownload: React.FC = () => {
             {videoFormats.map((format) => (
               <TableRow key={format.itag}>
                 <TableCell>
-                  {format.hasAudio && format.container == 'mp4'
+                  {format.hasAudio &&
+                  format.container == 'mp4' &&
+                  !format.qualityLabel
                     ? 'mp3'
                     : format.container}
                 </TableCell>
@@ -195,6 +183,13 @@ const YoutubeDownload: React.FC = () => {
       {error && (
         <Typography variant="h6" color="error">
           {error}
+        </Typography>
+      )}
+      {videoInfo && (
+        <Typography variant="body1" color="textPrimary">
+          This will open a new tab with a mp3/video player. Click on the three
+          buttons on the bottom right of the player. And then click on
+          "Download"
         </Typography>
       )}
     </Stack>

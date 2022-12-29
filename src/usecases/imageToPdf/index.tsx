@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { DropzoneArea } from 'mui-file-dropzone';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
 
 const ImageToPdf: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDrop = (files: File[]) => {
     setFiles(files);
@@ -50,6 +51,10 @@ const ImageToPdf: React.FC = () => {
 
     // For each file convert it to image and add it to the PDF
 
+    if (files.length === 0) {
+      setError('Please select atleast one image');
+      return;
+    }
     const images = await Promise.all(
       files.map((file, index) =>
         getImageFromUrl(URL.createObjectURL(file), index)
@@ -116,6 +121,7 @@ const ImageToPdf: React.FC = () => {
       }
     });
 
+    setError(null);
     // Save the PDF
     doc.save('converted.pdf');
     saveAs(doc.output('blob'), 'converted.pdf');
@@ -137,7 +143,11 @@ const ImageToPdf: React.FC = () => {
       <Button variant="outlined" onClick={handleClick}>
         Convert & Download to PDF
       </Button>
-      {}
+      {error && (
+        <Typography variant="body1" color="error">
+          {error}
+        </Typography>
+      )}{' '}
     </Stack>
   );
 };

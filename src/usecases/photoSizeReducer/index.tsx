@@ -39,8 +39,14 @@ const PhotoSizeReducer: React.FC = () => {
   const handleClick = async () => {
     // Resize image
 
-    const [file] = files;
     setError('');
+
+    if (files.length === 0) {
+      setError('Please select a file');
+      return;
+    }
+
+    const [file] = files;
     if (!file) {
       setError('Please select a file');
       return;

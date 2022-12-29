@@ -59,6 +59,11 @@ const PhotoResizer: React.FC = () => {
   const handleClick = () => {
     // Resize image
 
+    if (files.length === 0) {
+      setError('Please select a file');
+      return;
+    }
+
     const [file] = files;
     setError(null);
     if (!file) {
