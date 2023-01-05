@@ -52,15 +52,15 @@ const BmiCalculator: React.FC<{}> = () => {
 
   const bmiTypeCalculator = (bmi: number): string => {
     if (bmi <= 18.4) {
-      return 'Underweight';
+      return `${bmi.toFixed(2)} - Underweight`;
     }
     if (bmi > 18.5 && bmi <= 24.9) {
-      return 'Normal';
+      return `${bmi.toFixed(2)} - Normal`;
     }
     if (bmi > 25 && bmi <= 39.9) {
-      return 'Overweight';
+      return `${bmi.toFixed(2)} - Overweight`;
     }
-    return 'Obese';
+    return `${bmi.toFixed(2)} - Obese`;
   };
 
   const handleClick = () => {
@@ -236,19 +236,20 @@ const BmiCalculator: React.FC<{}> = () => {
           sx={{
             color: (theme) => {
               const bmi = bmiTypeCalculator(result);
-              if (bmi === 'Underweight') {
+              if (bmi.includes('Underweight')) {
                 return theme.palette.warning.main;
               }
-              if (bmi === 'Normal') {
+              if (bmi.includes('Normal')) {
                 return theme.palette.success.main;
               }
-              if (bmi === 'Overweight') {
+              if (bmi.includes('Overweight')) {
                 return theme.palette.warning.main;
               }
-              if (bmi === 'Obese') {
+              if (bmi.includes('Obese')) {
                 return theme.palette.error.main;
               }
             },
+            mt: 4,
           }}
         />
       )}

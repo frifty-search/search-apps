@@ -19,6 +19,12 @@ export type Apps = {
         url: string;
       }
     ];
+    source: [
+      {
+        name: string;
+        url: string;
+      }
+    ];
   };
 };
 
@@ -69,4 +75,24 @@ export async function getUsecaseQuery(): Promise<string[]> {
   } catch (err) {
     throw err;
   }
+}
+
+export async function postUsecaseDataFromServer(
+  id: number,
+  data: any
+): Promise<any> {
+  const formData = new FormData();
+
+  for (const name in data) {
+    formData.append(name, data[name]);
+  }
+
+  const response = await fetch(`${BASE_URL}/usecases/${id}`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  const resData = await response.blob();
+
+  return resData;
 }

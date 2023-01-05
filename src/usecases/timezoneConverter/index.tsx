@@ -38,37 +38,24 @@ export interface Timezone {
 
 const TimezoneConverter: React.FC<{
   data: {
-    timezones: {
-      [key: string]: Timezone;
-    };
-    timezoneLabels: {
-      [key: string]: string;
-    };
+    [key: string]: string;
   };
 }> = ({
   data,
 }: {
   data: {
-    timezones: {
-      [key: string]: Timezone;
-    };
-    timezoneLabels: {
-      [key: string]: string;
-    };
+    [key: string]: string;
   };
 }) => {
-  const { timezoneLabels } = data;
+  const timezoneLabels = data;
   const [givenTime, setgivenTime] = useState<Dayjs | null>(dayjs());
   const [yourCountry, setYourCountry] = useState<string>();
   const [country1, setCountry1] = useState<string>();
   const [country2, setCountry2] = useState<string>();
-  const [time1, setTime1] = useState<Dayjs | null>(null);
-  const [time2, setTime2] = useState<Dayjs | null>(null);
   const [error, setError] = useState<string>('');
+  const [result, setResult] = useState<React.ReactNode | null>(null);
 
   const handleClick = () => {
-    setTime1(null);
-    setTime2(null);
     if (!givenTime || !yourCountry) {
       setError('Please fill all the fields');
       return;
@@ -83,153 +70,163 @@ const TimezoneConverter: React.FC<{
       .tz(currentCountryTimeZone)
       .set('hour', givenTime.hour())
       .set('minute', givenTime.minute());
+    let time1: Dayjs | null = null,
+      time2: Dayjs | null = null;
     if (country1) {
       const country1timezone = timezoneLabels[country1];
-      const time1 = givenTimeInCurrentCountry.tz(country1timezone);
-      setTime1(time1);
+      time1 = givenTimeInCurrentCountry.tz(country1timezone);
     }
 
     if (country2 && country2 in timezoneLabels) {
       const country2timezone = timezoneLabels[country2];
-      const time2 = givenTimeInCurrentCountry.tz(country2timezone);
-      setTime2(time2);
+      time2 = givenTimeInCurrentCountry.tz(country2timezone);
     }
     setError('');
+    if (time1) {
+      setResult(
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Country</TableCell>
+              <TableCell>Time</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>{yourCountry}</TableCell>
+              <TableCell>
+                {givenTimeInCurrentCountry.format('hh:mm A ddd')}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>{country1}</TableCell>
+              <TableCell>{time1.format('hh:mm A ddd')}</TableCell>
+            </TableRow>
+            {time2 && (
+              <TableRow>
+                <TableCell>{country2}</TableCell>
+                <TableCell>{time2.format('hh:mm A ddd')}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      );
+    }
   };
 
   return (
-    <Stack spacing={1} mx={1} my={5}>
-      <Stack direction="row" spacing={1}>
-        <Stack spacing={1} direction={'column'}>
-          <Autocomplete
-            freeSolo
-            id="your-country"
-            disableClearable
-            options={Object.keys(timezoneLabels).map((v) => v)}
-            placeholder={'Your country'}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={'Your Country'}
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
-                fullWidth
-              />
-            )}
-            onInputChange={(
-              _: React.SyntheticEvent,
-              value: string,
-              reason: string
-            ) => {
-              if (reason === 'reset') {
-                setYourCountry(value);
-              } else if (reason === 'input') {
-                setYourCountry(value);
-              }
-            }}
-            fullWidth
-          />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-              label="Select Time"
-              renderInput={(params) => <TextField {...params} fullWidth />}
-              ampm
-              value={givenTime}
-              onChange={(newValue) => {
-                setgivenTime(newValue);
-              }}
-            />
-          </LocalizationProvider>
-        </Stack>
-        <Typography variant="h4" sx={{ alignSelf: 'center' }}>
-          =
+    <Stack spacing={2} mx={2} my={5}>
+      <Stack spacing={2} direction={'column'}>
+        <Typography variant={'h6'} sx={{ fontWeight: 'bold' }}>
+          Convert From
         </Typography>
-        <Stack spacing={1} direction={'column'}>
-          <Autocomplete
-            freeSolo
-            id="country-1"
-            disableClearable
-            options={Object.keys(timezoneLabels).map((v) => v)}
-            placeholder={'Country 1'}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={'Country 1'}
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
-                fullWidth
-              />
-            )}
-            onInputChange={(
-              _: React.SyntheticEvent,
-              value: string,
-              reason: string
-            ) => {
-              if (reason === 'reset') {
-                setCountry1(value);
-              } else if (reason === 'input') {
-                setCountry1(value);
-              }
+        <Autocomplete
+          freeSolo
+          id="your-country"
+          disableClearable
+          options={Object.keys(timezoneLabels).map((v) => v)}
+          placeholder={'Your country'}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={'Your Country'}
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+              }}
+              fullWidth
+            />
+          )}
+          onInputChange={(
+            _: React.SyntheticEvent,
+            value: string,
+            reason: string
+          ) => {
+            if (reason === 'reset') {
+              setYourCountry(value);
+            } else if (reason === 'input') {
+              setYourCountry(value);
+            }
+          }}
+          fullWidth
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <TimePicker
+            label="Select Time"
+            renderInput={(params) => <TextField {...params} fullWidth />}
+            ampm
+            value={givenTime}
+            onChange={(newValue) => {
+              setgivenTime(newValue);
             }}
-            fullWidth
           />
-          <TextField
-            label="Time 1"
-            InputProps={{
-              readOnly: true,
-            }}
-            value={time1 == null ? '' : time1.format('HH:mm A dddd')}
-            disabled
-            fullWidth
-            variant="outlined"
-          />
-        </Stack>
-        <Stack spacing={1} direction={'column'}>
-          <Autocomplete
-            freeSolo
-            id="country-2"
-            disableClearable
-            options={Object.keys(timezoneLabels).map((v) => v)}
-            placeholder={'Country 2'}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={'Country 2'}
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
-                fullWidth
-              />
-            )}
-            onInputChange={(
-              _: React.SyntheticEvent,
-              value: string,
-              reason: string
-            ) => {
-              if (reason === 'reset') {
-                setCountry2(value);
-              } else if (reason === 'input') {
-                setCountry2(value);
-              }
-            }}
-            fullWidth
-          />
-          <TextField
-            label="Time 2"
-            InputProps={{
-              readOnly: true,
-            }}
-            value={time2 == null ? '' : time2.format('HH:mm A dddd')}
-            disabled
-            fullWidth
-            variant="outlined"
-          />
-        </Stack>
+        </LocalizationProvider>
+      </Stack>
+
+      <Stack spacing={2} direction={'column'}>
+        <Typography variant={'h6'} sx={{ fontWeight: 'bold' }}>
+          Convert To
+        </Typography>
+        <Autocomplete
+          freeSolo
+          id="country-1"
+          disableClearable
+          options={Object.keys(timezoneLabels).map((v) => v)}
+          placeholder={'Country 1'}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={'Country 1'}
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+              }}
+              fullWidth
+            />
+          )}
+          onInputChange={(
+            _: React.SyntheticEvent,
+            value: string,
+            reason: string
+          ) => {
+            if (reason === 'reset') {
+              setCountry1(value);
+            } else if (reason === 'input') {
+              setCountry1(value);
+            }
+          }}
+          fullWidth
+        />
+        <Autocomplete
+          freeSolo
+          id="country-2"
+          disableClearable
+          options={Object.keys(timezoneLabels).map((v) => v)}
+          placeholder={'Country 2'}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={'Country 2'}
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+              }}
+              fullWidth
+            />
+          )}
+          onInputChange={(
+            _: React.SyntheticEvent,
+            value: string,
+            reason: string
+          ) => {
+            if (reason === 'reset') {
+              setCountry2(value);
+            } else if (reason === 'input') {
+              setCountry2(value);
+            }
+          }}
+          fullWidth
+        />
       </Stack>
 
       <Button
@@ -246,6 +243,7 @@ const TimezoneConverter: React.FC<{
           {error}
         </Typography>
       )}
+      {result != null && result}
     </Stack>
   );
 };

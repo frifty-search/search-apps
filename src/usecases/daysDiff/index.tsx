@@ -61,7 +61,8 @@ const DaysDiff: React.FC<{}> = () => {
       setError(`Start Date cannot be after End Date`);
       return;
     }
-    let year = endDay.diff(startDay, 'year');
+
+    let year = endDay.year() - startDay.year();
     let month = 0;
     let day = 0;
     if (endDay.month() < startDay.month()) {

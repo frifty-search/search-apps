@@ -27,13 +27,7 @@ const Finshots: React.FC = () => {
         {finshot.date}
       </Typography>
       <img src={finshot.image} alt={finshot.title} />
-      <div
-        dangerouslySetInnerHTML={{ __html: finshot.content }}
-        style={{
-          maxHeight: '300px',
-          overflowY: 'scroll',
-        }}
-      />
+      <div dangerouslySetInnerHTML={{ __html: finshot.content }} />
     </Stack>
   );
 };

@@ -16,7 +16,7 @@ const LoveCalculator: React.FC = () => {
       return 'Your love burns as hot as the sun, blazing through the vastness of space, and searing itself into your being.';
     }
     if (lovePercentage > 80) {
-      return 'Your love is as strong as that between an owner and their pet! Unyielding in its loyalty and comfort, albeit with less than optimal odors';
+      return 'Your love is as strong as that between an owner and their pet! Unyielding in its loyalty and comfort, albeit with less than optimal odors.';
     }
     if (lovePercentage > 70) {
       return "There's probably something there. Just make sure your presence is known so your feelings don't get trampled like a 4ft 8in NBA player.";
