@@ -20,6 +20,7 @@ const PngToJpeg: React.FC = () => {
 
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
+    const regex = new RegExp('[^.]+$');
     reader.onload = () => {
       const image = new Image();
       image.src = reader.result as string;
@@ -34,7 +35,7 @@ const PngToJpeg: React.FC = () => {
           const dataURL = canvas.toDataURL('image/jpeg');
           const a = document.createElement('a');
           a.href = dataURL;
-          a.download = 'image.jpeg';
+          a.download = files[0].name.replace(regex, 'jpeg');
           a.click();
         }
       };

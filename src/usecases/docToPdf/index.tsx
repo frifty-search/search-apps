@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, CircularProgress, Stack, Typography } from '@mui/material';
 import { DropzoneArea } from 'mui-file-dropzone';
 import { postUsecaseDataFromServer } from '../../utils/api.utils';
 import { saveAs } from 'file-saver';
@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 const DocToPdf: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDrop = (files: File[]) => {
     setFiles(files);
@@ -18,13 +19,19 @@ const DocToPdf: React.FC = () => {
       return;
     }
 
+    setIsLoading(true);
+
     const [file] = files;
 
     const blobData = await postUsecaseDataFromServer(23, {
       file,
     });
 
-    saveAs(blobData, 'converted.pdf');
+    const regex = new RegExp('[^.]+$');
+    const newFileName = file.name.replace(regex, 'pdf');
+
+    setIsLoading(false);
+    saveAs(blobData, newFileName);
     setError(null);
     return;
   };
@@ -43,10 +50,17 @@ const DocToPdf: React.FC = () => {
         onChange={handleDrop}
         showPreviewsInDropzone
         showFileNamesInPreview
+        showFileNames
       />
-      <Button variant="outlined" onClick={handleClick}>
-        Convert & Download to PDF
-      </Button>
+      {isLoading ? (
+        <Button variant="outlined" onClick={() => {}} disabled>
+          <CircularProgress />
+        </Button>
+      ) : (
+        <Button variant="outlined" onClick={handleClick}>
+          Convert & Download to PDF
+        </Button>
+      )}
       {error && (
         <Typography variant="body1" color="error">
           {error}

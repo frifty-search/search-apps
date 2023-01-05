@@ -125,23 +125,23 @@ const TypeMaster: React.FC = () => {
           countDown > 30 ? 'success' : countDown > 15 ? 'warning' : 'error'
         }
       >
-        `` Time Left : {countDown}
+        Time Left : {countDown}
       </Typography>
       {status === 'started' && (
-        <>
+        <Typography>
           {words.map((word, i) => (
-            <Typography key={i} component={'span'}>
-              <Typography>
+            <span key={i}>
+              <span>
                 {word.split('').map((char, idx) => (
-                  <Typography style={getCharClass(i, idx, char)} key={idx}>
+                  <span style={getCharClass(i, idx, char)} key={idx}>
                     {char}
-                  </Typography>
+                  </span>
                 ))}
-              </Typography>
-              <Typography> </Typography>
-            </Typography>
+              </span>
+              <span> </span>
+            </span>
           ))}
-        </>
+        </Typography>
       )}
       {status === 'finished' && (
         <Stack

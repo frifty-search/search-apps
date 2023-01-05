@@ -123,8 +123,10 @@ const ImageToPdf: React.FC = () => {
 
     setError(null);
     // Save the PDF
-    doc.save('converted.pdf');
-    saveAs(doc.output('blob'), 'converted.pdf');
+    const regex = new RegExp('[^.]+$');
+    const newFileName = files[0].name.replace(regex, 'pdf');
+    doc.save(newFileName);
+    saveAs(doc.output('blob'), newFileName);
   };
 
   return (
