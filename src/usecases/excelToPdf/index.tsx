@@ -1,0 +1,73 @@
+import React, { useState } from 'react';
+import { Button, CircularProgress, Stack, Typography } from '@mui/material';
+import { DropzoneArea } from 'mui-file-dropzone';
+import { postUsecaseDataFromServer } from '../../utils/api.utils';
+import { saveAs } from 'file-saver';
+
+const ExcelToPdf: React.FC = () => {
+  const [files, setFiles] = useState<File[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleDrop = (files: File[]) => {
+    setFiles(files);
+  };
+
+  const handleClick = async () => {
+    if (files.length === 0) {
+      setError('Please select a file');
+      return;
+    }
+
+    setIsLoading(true);
+
+    const [file] = files;
+
+    const blobData = await postUsecaseDataFromServer(23, {
+      file,
+    });
+
+    const regex = new RegExp('[^.]+$');
+    const newFileName = file.name.replace(regex, 'pdf');
+
+    setIsLoading(false);
+    saveAs(blobData, newFileName);
+    setError(null);
+    return;
+  };
+
+  return (
+    <Stack spacing={3} mx={2} my={5}>
+      <DropzoneArea
+        acceptedFiles={[
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          'application/vnd.oasis.opendocument.spreadsheet',
+          'text/csv',
+          'text/tab-separated-values',
+        ]}
+        filesLimit={1}
+        fileObjects={files}
+        dropzoneText="Click to upload"
+        onChange={handleDrop}
+        showFileNamesInPreview
+        showFileNames
+      />
+      {isLoading ? (
+        <Button variant="outlined" onClick={() => {}} disabled>
+          <CircularProgress />
+        </Button>
+      ) : (
+        <Button variant="outlined" onClick={handleClick}>
+          Convert & Download to PDF
+        </Button>
+      )}
+      {error && (
+        <Typography variant="body1" color="error">
+          {error}
+        </Typography>
+      )}{' '}
+    </Stack>
+  );
+};
+
+export default ExcelToPdf;

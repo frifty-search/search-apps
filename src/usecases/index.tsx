@@ -28,6 +28,13 @@ import CgpaToPercentage from './cgpaToPercentage';
 import AirPollution from './airPollution';
 import AnandBazaarPatrika from './anandBazaarPatrika';
 import GrammarCheck from './grammarCheck';
+import YoutubeDownload from './youtubeDownload';
+import WifiTransfer from './wifiTransfer';
+import CourierTrack from './courierTrack';
+import TypeMaster from './typeMaster';
+import DocToPdf from './docToPdf';
+import PptToPdf from './pptToPdf';
+import ExcelToPdf from './excelToPdf';
 export {
   DumbCharades,
   AgeCalculator,
@@ -59,4 +66,11 @@ export {
   AirPollution,
   AnandBazaarPatrika,
   GrammarCheck,
+  YoutubeDownload,
+  WifiTransfer,
+  CourierTrack,
+  TypeMaster,
+  DocToPdf,
+  PptToPdf,
+  ExcelToPdf,
 };

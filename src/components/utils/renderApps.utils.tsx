@@ -30,6 +30,13 @@ import {
   AirPollution,
   AnandBazaarPatrika,
   GrammarCheck,
+  YoutubeDownload,
+  WifiTransfer,
+  CourierTrack,
+  TypeMaster,
+  DocToPdf,
+  PptToPdf,
+  ExcelToPdf,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -96,5 +103,19 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <AnandBazaarPatrika />;
     case AppName.GRAMMAR_CHECK:
       return <GrammarCheck />;
+    case AppName.YOUTUBEDOWNLOAD:
+      return <YoutubeDownload />;
+    case AppName.WIFITRANSFER:
+      return <WifiTransfer />;
+    case AppName.COURIERTRACK:
+      return <CourierTrack />;
+    case AppName.TYPEMASTER:
+      return <TypeMaster />;
+    case AppName.DOC_TO_PDF:
+      return <DocToPdf />;
+    case AppName.PPT_TO_PDF:
+      return <PptToPdf />;
+    case AppName.EXCEL_TO_PDF:
+      return <ExcelToPdf />;
   }
 };

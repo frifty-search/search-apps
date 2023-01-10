@@ -59,6 +59,11 @@ const PhotoResizer: React.FC = () => {
   const handleClick = () => {
     // Resize image
 
+    if (files.length === 0) {
+      setError('Please select a file');
+      return;
+    }
+
     const [file] = files;
     setError(null);
     if (!file) {
@@ -78,6 +83,11 @@ const PhotoResizer: React.FC = () => {
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
+    const regex = new RegExp('[^.]+$');
+    const newFileName = file.name.replace(
+      regex,
+      outputFormat.toLocaleLowerCase()
+    );
     reader.onload = () => {
       const img = new Image();
       img.src = reader.result as string;
@@ -90,12 +100,7 @@ const PhotoResizer: React.FC = () => {
           ctx.drawImage(img, 0, 0, width, height);
           ctx.canvas.toBlob(
             (blob) => {
-              saveAs(
-                blob as Blob,
-                `${
-                  file.name.split('.')[0]
-                }-${width}x${height}.${outputFormat.toLowerCase()}`
-              );
+              saveAs(blob as Blob, newFileName);
             },
             `image/${outputFormat.toLowerCase()}`,
             1

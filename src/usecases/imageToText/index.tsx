@@ -135,6 +135,11 @@ const ImageToText: React.FC = () => {
   const handleClick = async () => {
     // Resize image
 
+    if (files.length === 0) {
+      setError('Please select a file');
+      return;
+    }
+
     const [file] = files;
     if (!file) {
       setError('Please select a file');

@@ -39,8 +39,14 @@ const PhotoSizeReducer: React.FC = () => {
   const handleClick = async () => {
     // Resize image
 
-    const [file] = files;
     setError('');
+
+    if (files.length === 0) {
+      setError('Please select a file');
+      return;
+    }
+
+    const [file] = files;
     if (!file) {
       setError('Please select a file');
       return;
@@ -59,6 +65,11 @@ const PhotoSizeReducer: React.FC = () => {
     console.log(maxSize / 1024);
 
     setLoading(0);
+    const regex = new RegExp('[^.]+$');
+    const newFileName = file.name.replace(
+      regex,
+      outputFormat.toLocaleLowerCase()
+    );
     imageCompression(file, {
       maxSizeMB: maxSize / 1024,
       useWebWorker: true,
@@ -68,7 +79,7 @@ const PhotoSizeReducer: React.FC = () => {
       fileType: `image/${outputFormat.toLowerCase()}`,
     })
       .then((compressedFile) => {
-        saveAs(compressedFile, `compressed.${outputFormat.toLowerCase()}`);
+        saveAs(compressedFile, newFileName);
         setLoading(null);
       })
       .catch((err) => {
