@@ -29,4 +29,5 @@ export const AppName = {
   ANAND_BAZAAR_PATRIKA: 36,
   FINSHOTS: 38,
   YOUTUBEDOWNLOAD: 20,
+  GRAMMAR_CHECK: 43,
 };

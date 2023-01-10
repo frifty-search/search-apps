@@ -27,6 +27,7 @@ import ImageToText from './imageToText';
 import CgpaToPercentage from './cgpaToPercentage';
 import AirPollution from './airPollution';
 import AnandBazaarPatrika from './anandBazaarPatrika';
+import GrammarCheck from './grammarCheck';
 export {
   DumbCharades,
   AgeCalculator,
@@ -57,4 +58,5 @@ export {
   CgpaToPercentage,
   AirPollution,
   AnandBazaarPatrika,
+  GrammarCheck,
 };
