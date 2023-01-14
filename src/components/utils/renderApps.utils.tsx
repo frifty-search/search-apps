@@ -29,6 +29,7 @@ import {
   CgpaToPercentage,
   AirPollution,
   AnandBazaarPatrika,
+  GrammarCheck,
   YoutubeDownload,
   WifiTransfer,
   CourierTrack,
@@ -100,6 +101,8 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <AirPollution />;
     case AppName.ANAND_BAZAAR_PATRIKA:
       return <AnandBazaarPatrika />;
+    case AppName.GRAMMAR_CHECK:
+      return <GrammarCheck />;
     case AppName.YOUTUBEDOWNLOAD:
       return <YoutubeDownload />;
     case AppName.WIFITRANSFER:

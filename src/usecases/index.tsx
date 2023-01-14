@@ -27,6 +27,7 @@ import ImageToText from './imageToText';
 import CgpaToPercentage from './cgpaToPercentage';
 import AirPollution from './airPollution';
 import AnandBazaarPatrika from './anandBazaarPatrika';
+import GrammarCheck from './grammarCheck';
 import YoutubeDownload from './youtubeDownload';
 import WifiTransfer from './wifiTransfer';
 import CourierTrack from './courierTrack';
@@ -64,6 +65,7 @@ export {
   CgpaToPercentage,
   AirPollution,
   AnandBazaarPatrika,
+  GrammarCheck,
   YoutubeDownload,
   WifiTransfer,
   CourierTrack,
