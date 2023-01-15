@@ -1,25 +1,43 @@
 import React, { useState } from 'react';
-import { Button, Stack, TextField, Typography, useTheme } from '@mui/material';
+import {
+  Button,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
+type Age = {
+  years: {
+    year: number;
+    month: number;
+  };
+  months: number;
+  weeks: number;
+  days: number;
+};
+
 const AgeCalculator: React.FC = () => {
   const [date, setDate] = useState<Dayjs | null>(dayjs().startOf('hours'));
-  const [age, setAge] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [age, setAge] = useState<Age | null>(null);
+
   const theme = useTheme();
 
   const handleChange = (newValue: Dayjs | null) => {
     if (!newValue) {
       setError('Please select a date');
-      setAge('');
+      setAge(null);
       return;
     }
     if (newValue.isAfter(dayjs())) {
       setError('Date cannot be in future');
-      setAge('');
+      setAge(null);
       setDate(newValue);
       return;
     }
@@ -30,12 +48,12 @@ const AgeCalculator: React.FC = () => {
   const handleClick = () => {
     if (!date) {
       setError('Please select a date');
-      setAge('');
+      setAge(null);
       return;
     }
     if (date.isAfter(dayjs())) {
       setError('Date cannot be in future');
-      setAge('');
+      setAge(null);
       return;
     }
 
@@ -45,39 +63,22 @@ const AgeCalculator: React.FC = () => {
     }
 
     const endDay = dayjs().startOf('day');
-    let year = endDay.year() - date.year();
-    let month = 0;
-    let day = 0;
-    if (endDay.month() < date.month()) {
-      year -= 1;
-      month = 12 - date.month() + endDay.month();
-    } else {
-      month = endDay.month() - date.month();
-    }
-    if (endDay.date() >= date.date()) {
-      day = endDay.date() - date.date();
-    } else {
-      month -= 1;
-      day = 31 - date.date() + endDay.date();
-      if (month === -1) {
-        year -= 1;
-        month = 11;
-      }
-    }
+
+    const years = endDay.diff(date, 'years', true);
+    const months = endDay.diff(date, 'month');
+    const days = endDay.diff(date, 'days');
+    const weeks = Math.floor(days / 7);
+
     setError('');
-    let timePeriod = ``;
-    if (year > 0) {
-      timePeriod += `${year} year${year > 1 ? 's' : ''}`;
-    }
-    if (month > 0) {
-      timePeriod += `${year > 0 ? ', ' : ''}${month} month${
-        month > 1 ? 's' : ''
-      }`;
-    }
-    timePeriod += `${year > 0 || month > 0 ? ' and ' : ''}${day} day${
-      day > 1 ? 's' : ''
-    }`;
-    setAge(timePeriod);
+    setAge({
+      years: {
+        year: Math.floor(years),
+        month: Math.floor((years % 1) * 12),
+      },
+      months,
+      days,
+      weeks,
+    });
   };
 
   return (
@@ -100,16 +101,28 @@ const AgeCalculator: React.FC = () => {
       >
         Calculate
       </Button>
-      {age.length !== 0 && (
-        <Typography
-          variant="h6"
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          Your age is {age}.
-        </Typography>
+      {age && (
+        <Stack direction={'row'} justifyContent={'space-around'}>
+          <Stack direction={'column'}>
+            <Typography variant="h6"> Age </Typography>
+          </Stack>
+          <Stack direction={'column'}>
+            <Typography variant="h6"> = </Typography>
+            <Typography variant="h6"> = </Typography>
+            <Typography variant="h6"> = </Typography>
+            <Typography variant="h6"> = </Typography>
+          </Stack>
+          <Stack direction={'column'}>
+            <Typography variant="h6">
+              {' '}
+              {age.years.year} years & {age.years.month} months{' '}
+            </Typography>
+            <Typography variant="h6"> {age.months} months</Typography>
+            <Typography variant="h6"> {age.weeks} weeks</Typography>
+            <Typography variant="h6"> {age.days} days</Typography>
+          </Stack>
+          <Stack direction={'row'}></Stack>
+        </Stack>
       )}
 
       {error.length !== 0 && (
