@@ -34,6 +34,11 @@ import TypeMaster from './typeMaster';
 import DocToPdf from './docToPdf';
 import PptToPdf from './pptToPdf';
 import ExcelToPdf from './excelToPdf';
+import AgeCalculatorExcel from './ageCalculatorExcel';
+import AgeDiff from './ageDiff';
+import BirthyearCalculator from './birthyearCalculator';
+import ChatGpt from './chatGpt';
+import ImageCreation from './imageCreation';
 export {
   DumbCharades,
   AgeCalculator,
@@ -71,4 +76,9 @@ export {
   DocToPdf,
   PptToPdf,
   ExcelToPdf,
+  AgeCalculatorExcel,
+  AgeDiff,
+  BirthyearCalculator,
+  ChatGpt,
+  ImageCreation,
 };
