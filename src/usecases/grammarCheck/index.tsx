@@ -66,16 +66,25 @@ const GrammarCheck: React.FC = () => {
       )}
 
       {result && (
-        <Typography
-          variant="body1"
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            textAlign: 'left',
-          }}
-        >
-          {result}
-        </Typography>
+        <>
+          <Typography
+            variant="body1"
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              textAlign: 'left',
+            }}
+          >
+            {result}
+          </Typography>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(result);
+            }}
+          >
+            Copy To Clipboard
+          </Button>
+        </>
       )}
 
       {error && (

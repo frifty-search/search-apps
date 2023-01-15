@@ -19,7 +19,7 @@ type ResponseData = {
 
 type SizeType = '1024x1024' | '512x512' | '256x256';
 
-const ChatGpt: React.FC = () => {
+const ImageCreation: React.FC = () => {
   const [text, setText] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -106,4 +106,4 @@ const ChatGpt: React.FC = () => {
   );
 };
 
-export default ChatGpt;
+export default ImageCreation;

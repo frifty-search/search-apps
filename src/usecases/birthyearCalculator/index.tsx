@@ -17,7 +17,7 @@ const BirthyearCalculator: React.FC = () => {
   return (
     <Stack spacing={2} mx={2} my={5}>
       <TextField
-        label="Enter your age"
+        label="Enter age"
         type="number"
         value={age}
         onChange={(e) => setAge(Number(e.target.value))}
