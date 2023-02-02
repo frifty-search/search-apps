@@ -23,7 +23,7 @@ type Age = {
 };
 
 const AgeCalculator: React.FC = () => {
-  const [date, setDate] = useState<Dayjs | null>(dayjs().startOf('hours'));
+  const [date, setDate] = useState<Dayjs | null>(dayjs().startOf('day'));
   const [error, setError] = useState<string>('');
   const [age, setAge] = useState<Age | null>(null);
 
@@ -38,10 +38,10 @@ const AgeCalculator: React.FC = () => {
     if (newValue.isAfter(dayjs())) {
       setError('Date cannot be in future');
       setAge(null);
-      setDate(newValue);
+      setDate(newValue.startOf('day'));
       return;
     }
-    setDate(newValue);
+    setDate(newValue.startOf('day'));
     setError('');
   };
 

@@ -103,7 +103,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
     case AppName.CGPA_TO_PERCENTAGE:
       return <CgpaToPercentage />;
     case AppName.AIR_POLLUTION:
-      return <AirPollution />;
+      return <AirPollution data={data} />;
     case AppName.ANAND_BAZAAR_PATRIKA:
       return <AnandBazaarPatrika />;
     case AppName.GRAMMAR_CHECK:

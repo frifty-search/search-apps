@@ -138,7 +138,7 @@ const AgeDiff: React.FC<{}> = () => {
           </Typography>
           <Stack direction={'row'} justifyContent={'space-around'}>
             <Stack direction={'column'}>
-              <Typography variant="h6"> Age </Typography>
+              <Typography variant="h6"> Difference in age </Typography>
             </Stack>
             <Stack direction={'column'}>
               <Typography variant="h6"> = </Typography>

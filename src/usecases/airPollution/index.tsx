@@ -39,7 +39,12 @@ const levels = [
   'hazardous to health',
 ];
 
-const AirPollution: React.FC = () => {
+const AirPollution: React.FC<{
+  data: {
+    cities: string[];
+  };
+}> = ({ data }: { data: { cities: string[] } }) => {
+  const { cities } = data;
   const [city, setCity] = useState<string>('');
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
@@ -70,233 +75,37 @@ const AirPollution: React.FC = () => {
     setError('');
   };
 
-  const cities: string[] = [
-    'Abohar',
-    'Agartala',
-    'Ahmedabad',
-    'Ahmednagar',
-    'Aizawl',
-    'Ajmer',
-    'Akola',
-    'Alappuzha',
-    'Aligarh',
-    'Amaravati',
-    'Ambarnath',
-    'Amravati',
-    'Amritsar',
-    'Amroha',
-    'Anand',
-    'Anantapur',
-    'Anantnag',
-    'Arrah',
-    'Assam',
-    'Aurangabad',
-    'Avadi',
-    'Bahraich',
-    'Bally',
-    'Bangalore',
-    'Baranagar',
-    'Bareilly',
-    'Barnala',
-    'Bellary',
-    'Berhampur',
-    'Bhagalpur',
-    'Bhalswa',
-    'Bhatpara',
-    'Bhavnagar',
-    'Bhilai',
-    'Bhilwara',
-    'Bhind',
-    'Bhiwandi',
-    'Bhiwani',
-    'Bhubaneswar',
-    'Bhusawal',
-    'Bikaner',
-    'Bilaspur',
-    'Bokaro',
-    'Bongaigaon',
-    'Burhanpur',
-    'Chandigarh',
-    'Chennai',
-    'Chittoor',
-    'Coimbatore',
-    'Cuttack',
-    'Darbhanga',
-    'Davanagere',
-    'Dehradun',
-    'Dehri',
-    'Delhi',
-    'Dhanbad',
-    'Dhule',
-    'Dimapur',
-    'Dum',
-    'Durg',
-    'Durgapur',
-    'Etawah',
-    'Faridkot',
-    'Farrukhabad',
-    'Fatehpur',
-    'Firozabad',
-    'Gama',
-    'Gandhidham',
-    'Ganganagar',
-    'Gangtok',
-    'Goa',
-    'Gorakhpur',
-    'Gulbarga',
-    'Guna',
-    'Guntakal',
-    'Guntur',
-    'Gurgaon',
-    'Guwahati',
-    'Gwalior',
-    'Hapur',
-    'Haryana',
-    'Hoshiarpur',
-    'Hosur',
-    'Hyderabad',
-    'Imphal',
-    'Jabalpur',
-    'Jalandhar',
-    'Jamshedpur',
-    'Jat',
-    'Jaunpur',
-    'Jharkhand',
-    'Jind',
-    'Jodhpur',
-    'Kadapa',
-    'Kamarhati',
-    'Karawal',
-    'Karimnagar',
-    'Kashmir',
-    'Katni',
-    'Kavali',
-    'Khammam',
-    'Khandwa',
-    'Kharagpur',
-    'Khora',
-    'Kochi',
-    'Kolhapur',
-    'Kolkata',
-    'Kollam',
-    'Korba',
-    'Kota',
-    'Kottayam',
-    'Kozhikode',
-    'Kulti',
-    'Kupwad',
-    'Kurnool',
-    'Loni',
-    'Machilipatnam',
-    'Madanapalle',
-    'Madhyamgram',
-    'Madurai',
-    'Mahbubnagar',
-    'Majra',
-    'Malda',
-    'Mathura',
-    'Medininagar',
-    'Mehsana',
-    'Midnapore',
-    'MiraBhayandar',
-    'Miryalaguda',
-    'Moradabad',
-    'Morbi',
-    'Morena',
-    'Motihari',
-    'Muktsar',
-    'Mumbai',
-    'Munger',
-    'Muzaffarnagar',
-    'Muzaffarpur',
-    'Mysore',
-    'Nadiad',
-    'Nagaland',
-    'Nagaon',
-    'Naihati',
-    'Nanded',
-    'Nandyal',
-    'Narasaraopet',
-    'Navi',
-    'Nicobar',
-    'Noida',
-    'Orai',
-    'Pallavaram',
-    'Panchkula',
-    'Panipat',
-    'Panvel',
-    'Pathankot',
-    'Patiala',
-    'Phagwara',
-    'Phusro',
-    'Port',
-    'Puducherry',
-    'Raebareli',
-    'Raiganj',
-    'Raigarh',
-    'Raipur',
-    'Rajahmundry',
-    'Rajpur',
-    'Ranchi',
-    'Ratlam',
-    'Rewari',
-    'Rohtak',
-    'Rourkela',
-    'Sagar',
-    'Saharanpur',
-    'Salem',
-    'Sambalpur',
-    'Sambhal',
-    'Secunderabad',
-    'Sharif',
-    'Shimla',
-    'Shivpuri',
-    'Siliguri',
-    'Singrauli',
-    'Solapur',
-    'Sonipat',
-    'Suleman',
-    'Sultan',
-    'Surendranagar',
-    'Tadipatri',
-    'Thiruvananthapuram',
-    'Tinsukia',
-    'Tiruchirappalli',
-    'Tiruppur',
-    'Udupi',
-    'Ujjain',
-    'Valsad',
-    'Vasco Da Gama',
-    'Vellore',
-    'Vijayawada',
-    'Warangal',
-  ];
+  const handleChange = (
+    _: React.SyntheticEvent,
+    value: string,
+    reason: string
+  ) => {
+    if (reason === 'reset') {
+      setCity(value);
+    } else if (reason === 'input') {
+      setCity(value);
+    }
+  };
 
   return (
     <Stack spacing={3} mx={1} my={5}>
       <Stack spacing={3} direction={'row'}>
         <Autocomplete
           disablePortal
+          fullWidth
           id="Cities-Prompt"
           options={cities}
-          filterOptions={() =>
-            matchSorter(cities, city, {
-              threshold: matchSorter.rankings.WORD_STARTS_WITH, //ensures that the list displays cities that start with the value(i.e: city) entered in the TextField
-            })
-          }
           renderInput={(params) => (
             <TextField
               {...params} //cannot use "id" property here as {...params} overrides the "id" property
               label="City Name"
               value={city}
               fullWidth
-              onChange={(e) => {
-                setCity(e.target.value);
-              }}
               variant="outlined"
             />
           )}
-        ></Autocomplete>
+          onInputChange={handleChange}
+        />
         {/* <TextField
           id="city"
           label="City Name"
