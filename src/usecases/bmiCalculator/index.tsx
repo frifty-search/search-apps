@@ -8,7 +8,17 @@ import {
   useTheme,
   Grid,
   Slider,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Select,
+  MenuItem,
+  InputLabel,
+  SelectChangeEvent,
 } from '@mui/material';
+import { RadioButtonUnchecked } from '@mui/icons-material';
 
 type HeightType = 'cm' | 'ft';
 type WeightType = 'kg' | 'lbs';
@@ -17,6 +27,8 @@ const BmiCalculator: React.FC<{}> = () => {
   const [error, setError] = useState('');
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0.0);
+  const [age, setAge] = useState(0);
+  const [gender, setGender] = useState('');
   const [feetHeight, setFeetHeight] = useState({
     feet: 0,
     inches: 0,
@@ -64,21 +76,6 @@ const BmiCalculator: React.FC<{}> = () => {
   };
 
   const handleClick = () => {
-    if (heightType === 'cm' && height === 0) {
-      setError('Height cannot be 0');
-      setResult(-1);
-      return;
-    }
-
-    if (
-      heightType === 'ft' &&
-      (feetHeight.feet === 0 || feetHeight.inches === 0)
-    ) {
-      setError('Height cannot be 0');
-      setResult(-1);
-      return;
-    }
-
     if (weight === 0) {
       setError('Weight cannot be 0.');
       setResult(-1);
@@ -108,6 +105,33 @@ const BmiCalculator: React.FC<{}> = () => {
       setResult(Math.round((bmi + Number.EPSILON) * 100) / 100);
       setError('');
     }
+
+    if (heightType === 'cm' && height === 0) {
+      setError('Height cannot be 0');
+      setResult(-1);
+      return;
+    }
+
+    if (
+      heightType === 'ft' &&
+      (feetHeight.feet === 0 || feetHeight.inches === 0)
+    ) {
+      setError('Height cannot be 0');
+      setResult(-1);
+      return;
+    }
+
+    if (age === 0) {
+      setError('Age cannot be 0');
+      setResult(-1);
+      return;
+    }
+
+    if (gender.length === 0) {
+      setError('Please select your gender');
+      setResult(-1);
+      return;
+    }
   };
 
   const handleWeight = (e: ChangeEvent<HTMLInputElement>) => {
@@ -118,8 +142,44 @@ const BmiCalculator: React.FC<{}> = () => {
     setHeight(parseFloat(e.target.value));
   };
 
+  const handleAge = (e: ChangeEvent<HTMLInputElement>) => {
+    setAge(parseFloat(e.target.value));
+  };
+
+  const handleGender = (e: SelectChangeEvent) => {
+    setGender(e.target.value);
+  };
+
   return (
     <Stack spacing={3} mx={3} my={5}>
+      {/* <Stack spacing={3} direction={'row'}>
+        <TextField
+          defaultValue={age.toString()}
+          label={'Enter your age'}
+          onChange={handleAge}
+          name={'age'}
+          variant={'outlined'}
+          required
+          fullWidth
+        />
+
+        <FormControl fullWidth>
+          <InputLabel id="gender-select-label">Gender</InputLabel>
+          <Select
+            labelId="gender-select-label"
+            id="Gender"
+            value={gender}
+            label={'Select your gender'}
+            fullWidth
+            onChange={handleGender}
+          >
+            <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="Female">Female</MenuItem>
+            <MenuItem value="Others">Others</MenuItem>
+          </Select>
+        </FormControl>
+      </Stack> */}
+
       <Grid container alignItems={'center'}>
         <Grid item xs={8}>
           <TextField
@@ -216,6 +276,7 @@ const BmiCalculator: React.FC<{}> = () => {
           </Stack>
         </Grid>
       </Grid>
+
       <Button
         sx={{ mt: 1, mr: 1, boxShadow: 2 }}
         type="submit"
