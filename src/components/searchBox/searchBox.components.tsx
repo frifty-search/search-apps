@@ -1,5 +1,6 @@
 import { Search } from '@mui/icons-material';
 import { Autocomplete, IconButton, TextField } from '@mui/material';
+import { matchSorter } from 'match-sorter';
 import React, { ChangeEventHandler } from 'react';
 
 type SearchBoxProps = {
@@ -32,7 +33,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
         freeSolo
         id="free-solo-2-demo"
         disableClearable
-        options={options}
+        options={[...new Set(options)]}
         placeholder={placeholder}
         renderInput={(params) => (
           <TextField

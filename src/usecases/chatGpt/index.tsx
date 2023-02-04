@@ -7,14 +7,23 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { getUsecaseDataFromServer } from '../../utils/api.utils';
-import { setLogging } from 'tesseract.js';
 
 type ResponseData = {
-  text: string | null;
+  data: {
+    text: string | null;
+    index: number;
+    logprobs: {
+      tokens?: Array<string>;
+      token_logprobs?: Array<number>;
+      top_logprobs?: Array<object>;
+      text_offset?: Array<number>;
+    } | null;
+    finish_reason: string;
+  }[];
   error: string | null;
 };
 
-const GrammarCheck: React.FC = () => {
+const ChatGpt: React.FC = () => {
   const [text, setText] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +41,7 @@ const GrammarCheck: React.FC = () => {
       return;
     }
 
-    const data: ResponseData = await getUsecaseDataFromServer(43, {
+    const data: ResponseData = await getUsecaseDataFromServer(47, {
       text,
     });
 
@@ -43,7 +52,7 @@ const GrammarCheck: React.FC = () => {
       return;
     }
     setIsLoading(false);
-    setResult(data.text);
+    setResult(data.data[0].text);
   };
 
   return (
@@ -52,7 +61,7 @@ const GrammarCheck: React.FC = () => {
         size="medium"
         multiline={true}
         value={text}
-        label={'Enter your text'}
+        label={'Enter your question ?'}
         onChange={(e) => setText(e.target.value)}
       />
       {isLoading ? (
@@ -61,30 +70,21 @@ const GrammarCheck: React.FC = () => {
         </Button>
       ) : (
         <Button variant="outlined" onClick={handleClick}>
-          Check
+          Get me answer
         </Button>
       )}
 
       {result && (
-        <>
-          <Typography
-            variant="body1"
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              textAlign: 'left',
-            }}
-          >
-            {result}
-          </Typography>
-          <Button
-            onClick={() => {
-              navigator.clipboard.writeText(result);
-            }}
-          >
-            Copy To Clipboard
-          </Button>
-        </>
+        <Typography
+          variant="body1"
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            textAlign: 'left',
+          }}
+        >
+          {result}
+        </Typography>
       )}
 
       {error && (
@@ -104,4 +104,4 @@ const GrammarCheck: React.FC = () => {
   );
 };
 
-export default GrammarCheck;
+export default ChatGpt;

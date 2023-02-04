@@ -21,7 +21,6 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.1",
     "@mui/x-date-pickers": "^5.0.0",
-    "@types/node": "^18.11.13",
     "browser-image-compression": "^2.0.0",
     "copy-image-clipboard": "^2.1.2",
     "dayjs": "^1.11.5",
@@ -34,6 +33,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-medium-image-zoom": "^5.1.2",
+    "styled-components": "^5.3.6",
     "tesseract.js": "^3.0.3",
     "timezone-abbreviations": "^1.2.6",
     "timezones-list": "^3.0.1"
@@ -42,6 +42,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^2.1.0",
     "husky": "^8.0.1",
     "prettier": "^2.7.1",

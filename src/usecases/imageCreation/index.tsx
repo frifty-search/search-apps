@@ -1,24 +1,30 @@
 import {
   Button,
   CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { getUsecaseDataFromServer } from '../../utils/api.utils';
-import { setLogging } from 'tesseract.js';
 
 type ResponseData = {
-  text: string | null;
+  data: string | null;
   error: string | null;
 };
 
-const GrammarCheck: React.FC = () => {
+type SizeType = '1024x1024' | '512x512' | '256x256';
+
+const ImageCreation: React.FC = () => {
   const [text, setText] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [size, setSize] = useState<SizeType>('1024x1024');
 
   const handleClick = async () => {
     setError(null);
@@ -32,8 +38,9 @@ const GrammarCheck: React.FC = () => {
       return;
     }
 
-    const data: ResponseData = await getUsecaseDataFromServer(43, {
+    const data: ResponseData = await getUsecaseDataFromServer(48, {
       text,
+      size,
     });
 
     if (data.error) {
@@ -43,7 +50,7 @@ const GrammarCheck: React.FC = () => {
       return;
     }
     setIsLoading(false);
-    setResult(data.text);
+    setResult(data.data);
   };
 
   return (
@@ -52,40 +59,35 @@ const GrammarCheck: React.FC = () => {
         size="medium"
         multiline={true}
         value={text}
-        label={'Enter your text'}
+        label={'Enter your imagination ?'}
         onChange={(e) => setText(e.target.value)}
+        fullWidth
       />
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Output Size</InputLabel>
+        <Select
+          labelId={'demo-simple-select-label'}
+          id={'demo-simple-select'}
+          value={size}
+          onChange={(e) => setSize(e.target.value as SizeType)}
+          label={'Size'}
+        >
+          <MenuItem value={'1024x1024'}>1024x1024</MenuItem>
+          <MenuItem value={'512x512'}>512x512</MenuItem>
+          <MenuItem value={'256x256'}>256x256</MenuItem>
+        </Select>
+      </FormControl>
       {isLoading ? (
         <Button variant="outlined" onClick={() => {}} disabled>
           <CircularProgress />
         </Button>
       ) : (
         <Button variant="outlined" onClick={handleClick}>
-          Check
+          Create
         </Button>
       )}
 
-      {result && (
-        <>
-          <Typography
-            variant="body1"
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              textAlign: 'left',
-            }}
-          >
-            {result}
-          </Typography>
-          <Button
-            onClick={() => {
-              navigator.clipboard.writeText(result);
-            }}
-          >
-            Copy To Clipboard
-          </Button>
-        </>
-      )}
+      {result && <img src={result} width="100%" height="100%" loading="lazy" />}
 
       {error && (
         <Typography
@@ -104,4 +106,4 @@ const GrammarCheck: React.FC = () => {
   );
 };
 
-export default GrammarCheck;
+export default ImageCreation;

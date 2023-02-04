@@ -37,6 +37,11 @@ import {
   DocToPdf,
   PptToPdf,
   ExcelToPdf,
+  AgeCalculatorExcel,
+  AgeDiff,
+  BirthyearCalculator,
+  ChatGpt,
+  ImageCreation,
 } from '../../usecases';
 import { Apps } from '../../utils/api.utils';
 import { AppName } from '../../utils/appName.utils';
@@ -98,7 +103,7 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
     case AppName.CGPA_TO_PERCENTAGE:
       return <CgpaToPercentage />;
     case AppName.AIR_POLLUTION:
-      return <AirPollution />;
+      return <AirPollution data={data} />;
     case AppName.ANAND_BAZAAR_PATRIKA:
       return <AnandBazaarPatrika />;
     case AppName.GRAMMAR_CHECK:
@@ -117,5 +122,15 @@ export const renderApps = ({ appId, data }: Apps): React.ReactNode => {
       return <PptToPdf />;
     case AppName.EXCEL_TO_PDF:
       return <ExcelToPdf />;
+    case AppName.AGECALCULATOREXCEL:
+      return <AgeCalculatorExcel />;
+    case AppName.AGEDIFF:
+      return <AgeDiff />;
+    case AppName.BIRTHYEARCALCULATOR:
+      return <BirthyearCalculator />;
+    case AppName.CHAT_GPT:
+      return <ChatGpt />;
+    case AppName.IMAGECREATION:
+      return <ImageCreation />;
   }
 };
