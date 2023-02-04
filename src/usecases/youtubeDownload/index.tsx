@@ -75,8 +75,16 @@ const YoutubeDownload: React.FC = () => {
       setVideoInfo(null);
       const regexYTShare = /https\:\/\/youtu\.be\/[\s\S]+/gm;
       const regexYTWatch = /https\:\/\/www\.youtube\.com\/watch\?v\=[\s\S]+/gm;
+      const regexYTShorts = /https\:\/\/www\.youtube\.com\/shorts\/[\s\S]+/gm;
+      const regexYTShortsShare =
+        /https\:\/\/youtube\.com\/shorts\/[\s\S]+\?feature\=share/gm;
 
-      if (!videoUrl.match(regexYTShare) && !videoUrl.match(regexYTWatch)) {
+      if (
+        !videoUrl.match(regexYTShare) &&
+        !videoUrl.match(regexYTWatch) &&
+        !videoUrl.match(regexYTShorts) &&
+        !videoUrl.match(regexYTShortsShare)
+      ) {
         setError('Invalid Youtuble URL');
         return;
       }
