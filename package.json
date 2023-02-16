@@ -43,6 +43,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
+    "@types/styled-components-react-native": "^5.2.1",
     "@vitejs/plugin-react": "^2.1.0",
     "husky": "^8.0.1",
     "prettier": "^2.7.1",
